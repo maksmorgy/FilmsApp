@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		C11136FE275E7459003E7DEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11136FD275E7459003E7DEA /* AppDelegate.swift */; };
 		C1113700275E7459003E7DEA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11136FF275E7459003E7DEA /* SceneDelegate.swift */; };
-		C1113702275E7459003E7DEA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113701275E7459003E7DEA /* ViewController.swift */; };
+		C1113702275E7459003E7DEA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113701275E7459003E7DEA /* MainViewController.swift */; };
 		C1113708275E7459003E7DEA /* FilmsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1113706275E7459003E7DEA /* FilmsApp.xcdatamodeld */; };
 		C111370A275E745A003E7DEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1113709275E745A003E7DEA /* Assets.xcassets */; };
 		C111370D275E745A003E7DEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C111370B275E745A003E7DEA /* LaunchScreen.storyboard */; };
-		C1113719275E74EA003E7DEA /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113718275E74EA003E7DEA /* Presenter.swift */; };
-		C111371D275E9C9E003E7DEA /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111371C275E9C9E003E7DEA /* Cell.swift */; };
+		C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113718275E74EA003E7DEA /* MainPresenter.swift */; };
+		C111371D275E9C9E003E7DEA /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111371C275E9C9E003E7DEA /* MainCell.swift */; };
 		C1113720275F4489003E7DEA /* FilmsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111371F275F4489003E7DEA /* FilmsModel.swift */; };
 		C1113724275F4F70003E7DEA /* FiimManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113723275F4F70003E7DEA /* FiimManagerDelegate.swift */; };
 		C1113726275FBA8C003E7DEA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113725275FBA8C003E7DEA /* NetworkManager.swift */; };
@@ -24,13 +24,13 @@
 		C11136FA275E7459003E7DEA /* FilmsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11136FD275E7459003E7DEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C11136FF275E7459003E7DEA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C1113701275E7459003E7DEA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C1113701275E7459003E7DEA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C1113707275E7459003E7DEA /* FilmsApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FilmsApp.xcdatamodel; sourceTree = "<group>"; };
 		C1113709275E745A003E7DEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C111370C275E745A003E7DEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C111370E275E745A003E7DEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C1113718275E74EA003E7DEA /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
-		C111371C275E9C9E003E7DEA /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		C1113718275E74EA003E7DEA /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		C111371C275E9C9E003E7DEA /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		C111371F275F4489003E7DEA /* FilmsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsModel.swift; sourceTree = "<group>"; };
 		C1113723275F4F70003E7DEA /* FiimManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiimManagerDelegate.swift; sourceTree = "<group>"; };
 		C1113725275FBA8C003E7DEA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 		C1113715275E7498003E7DEA /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				C1113718275E74EA003E7DEA /* Presenter.swift */,
+				C1113718275E74EA003E7DEA /* MainPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -98,8 +98,8 @@
 		C1113716275E74AB003E7DEA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C1113701275E7459003E7DEA /* ViewController.swift */,
-				C111371C275E9C9E003E7DEA /* Cell.swift */,
+				C1113701275E7459003E7DEA /* MainViewController.swift */,
+				C111371C275E9C9E003E7DEA /* MainCell.swift */,
 				C1113723275F4F70003E7DEA /* FiimManagerDelegate.swift */,
 			);
 			path = View;
@@ -184,14 +184,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1113726275FBA8C003E7DEA /* NetworkManager.swift in Sources */,
-				C1113702275E7459003E7DEA /* ViewController.swift in Sources */,
+				C1113702275E7459003E7DEA /* MainViewController.swift in Sources */,
 				C1113720275F4489003E7DEA /* FilmsModel.swift in Sources */,
 				C1113708275E7459003E7DEA /* FilmsApp.xcdatamodeld in Sources */,
 				C1113724275F4F70003E7DEA /* FiimManagerDelegate.swift in Sources */,
-				C111371D275E9C9E003E7DEA /* Cell.swift in Sources */,
+				C111371D275E9C9E003E7DEA /* MainCell.swift in Sources */,
 				C11136FE275E7459003E7DEA /* AppDelegate.swift in Sources */,
 				C1113700275E7459003E7DEA /* SceneDelegate.swift in Sources */,
-				C1113719275E74EA003E7DEA /* Presenter.swift in Sources */,
+				C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

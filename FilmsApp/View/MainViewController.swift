@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         
         print("viewController")
         network.fetchFilm(film: "Ali")
+        myTableView.reloadData()
         
     }
     
@@ -41,11 +42,12 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
+        //cell.setCell(method TableVieCell)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -60,6 +62,7 @@ extension ViewController: FilmManagerDelegate {
         self.film?.id = film.id
         self.film?.original_title = film.original_title
         print(film.original_title)
+        print("update Data")
     }
     
     func didFailWithError(error: Error) {
