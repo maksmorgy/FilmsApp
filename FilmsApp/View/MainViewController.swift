@@ -10,8 +10,8 @@ import UIKit
 class ViewController: UIViewController {
     
     var myTableView = UITableView()
-    var presenter: MainViewPresenterProtocol!
     var film: FilmsModel?
+    var presenter: MainViewPresenterProtocol
     
     
     
@@ -23,6 +23,17 @@ class ViewController: UIViewController {
         
         //myTableView.reloadData()
         
+    }
+    init(presenter: MainViewPresenterProtocol) {
+        
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+        self.presenter.view = self
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func createTableView() {

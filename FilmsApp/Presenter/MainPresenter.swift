@@ -7,10 +7,11 @@ protocol MainViewProtocol: AnyObject {
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
-    init(view: MainViewProtocol, network: NetworkManagerProtocol )
+    //init(view: MainViewProtocol, network: NetworkManagerProtocol )
     
     func getData()
     var data: FilmsModel? { get set }
+    var view: MainViewProtocol? { get set }
 }
 
 class Presenter: MainViewPresenterProtocol {
@@ -20,9 +21,10 @@ class Presenter: MainViewPresenterProtocol {
     weak var view: MainViewProtocol?
     let network: NetworkManagerProtocol!
     
-    required init(view: MainViewProtocol, network: NetworkManagerProtocol) {
+    
+    
+    required init(network: NetworkManagerProtocol) {
         
-        self.view = view
         self.network = network
         self.getData()
     }
