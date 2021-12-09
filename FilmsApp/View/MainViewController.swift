@@ -8,30 +8,24 @@
 import UIKit
 
 class ViewController: UIViewController {
- 
+    
     var myTableView = UITableView()
-    private let presenter = Presenter()
-    private let network = NetworkManager()
-    var cell = TableViewCell()
+    var presenter: MainViewPresenterProtocol!
     var film: FilmsModel?
     
     
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createTableView()
         self.navigationItem.title = "Films"
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        network.delegate = self
-        cell.delegate = self
         
-        print("viewController")
-        network.fetchFilm(film: "Ali")
-        myTableView.reloadData()
+        //myTableView.reloadData()
         
     }
     
-    func createTableView() {
+    private func createTableView() {
         myTableView = UITableView(frame: view.bounds, style: .plain)
         self.view.addSubview(myTableView)
         self.myTableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
@@ -47,7 +41,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-        //cell.setCell(method TableVieCell)
+        if let film1 = presenter.data?.original_title {
+            cell.myLabel.text = film1
+        } else {
+            print("error")
+        }
+        //cell.myLabel.text = film
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -55,26 +54,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ViewController: FilmManagerDelegate {
-    
-    
-    func didUpdateData(film: FilmsModel) {
-        self.film?.id = film.id
-        self.film?.original_title = film.original_title
-        print(film.original_title)
-        print("update Data")
+extension ViewController: MainViewProtocol {
+    func succes() {
+        myTableView.reloadData()
     }
     
-    func didFailWithError(error: Error) {
-        print(error)
-    }
-    
-    func setCell() -> FilmsModel? {
-        print("setData")
-        return film
+    func failure(error: Error) {
+        print(error.localizedDescription)
     }
     
     
 }
-
 
