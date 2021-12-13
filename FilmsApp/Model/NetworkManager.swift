@@ -5,6 +5,7 @@ protocol NetworkManagerProtocol {
 }
 
 class NetworkManager: NetworkManagerProtocol {
+    
     //let filmURL = "https://api.themoviedb.org/3/movie/550?api_key=e2e4bcb7d129a3f2fc10147b899a604d"
     
 //    func fetchFilm(film: String) {
@@ -21,14 +22,12 @@ class NetworkManager: NetworkManagerProtocol {
                 (data, response, error) in
                 if error != nil {
                     completion(.failure(error!))
-                    //self.delegate?.didFailWithError(error: error!)
                     return
                 }
                 if let safeData = data {
                     if let data = self.parseJSON(filmData: safeData) {
-                        print(data)
+                        //print(data)
                         completion(.success(data))
-                        //self.delegate?.didUpdateData(film: film)
                         
                     }
                 }
@@ -41,10 +40,17 @@ class NetworkManager: NetworkManagerProtocol {
         let decoder = JSONDecoder()
         
         do {
-            let decodedData = try decoder.decode(FilmsModel.self, from: filmData)
+            let decodedData = try decoder.decode(FilmData.self, from: filmData)
             let id = decodedData.id
             let title = decodedData.original_title
-            let film = FilmsModel(id: id, original_title: title)
+            let poster = decodedData.poster_path
+            let homepage = decodedData.homepage
+            let url = homepage + poster
+            
+            //let image = decodedData.poster_path
+            //let poster = decodedData.homepage
+            let film = FilmsModel(id: id, original_title: title, urlImage: url)
+            print(film)
             return film
         } catch  {
             print(error)

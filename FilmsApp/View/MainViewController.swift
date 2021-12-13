@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     var myTableView = UITableView()
     var film: FilmsModel?
-    var presenter: MainViewPresenterProtocol
+    var presenter: MainViewPresenterProtocol?
     
     
     
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        self.presenter.view = self
+        self.presenter?.view = self
         
     }
     
@@ -38,36 +38,70 @@ class ViewController: UIViewController {
     
     private func createTableView() {
         myTableView = UITableView(frame: view.bounds, style: .plain)
+        //create constraints for myTableView
         self.view.addSubview(myTableView)
         self.myTableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
         self.myTableView.delegate = self
         self.myTableView.dataSource = self
+        self.myTableView.backgroundColor = .white
+        myTableView.isUserInteractionEnabled = true
     }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-        if let film1 = presenter.data?.original_title {
-            cell.myLabel.text = film1
-        } else {
-            print("error")
-        }
-        //cell.myLabel.text = film
+//         if let film = presenter?.data 
+
         return cell
     }
+    
+    @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
+        guard let section = sender?.view?.tag else { return }
+       // performSegue(withIdentifier: "segue", sender: nil)
+        let newViewController = ListViewController()
+        self.navigationController?.pushViewController(newViewController, animated: true)
+        print("tapped on \(section)")
+    }
+    
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
+        var genre = ["Cartoons", "Films", "Serials"]
+        let label = UILabel(frame: CGRect(x: 5, y: 20, width: 200, height: 40))
+        label.text = genre[section]
+        view.addSubview(label)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(headerTapped(_:))
+        )
+        view.tag = section
+        view.addGestureRecognizer(tapGestureRecognizer)
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 70
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 150
     }
 }
+
 
 extension ViewController: MainViewProtocol {
     func succes() {
         myTableView.reloadData()
+        
     }
     
     func failure(error: Error) {

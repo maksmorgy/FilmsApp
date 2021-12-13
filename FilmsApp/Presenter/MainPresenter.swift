@@ -1,4 +1,3 @@
-
 import Foundation
 
 protocol MainViewProtocol: AnyObject {
@@ -16,7 +15,7 @@ protocol MainViewPresenterProtocol: AnyObject {
 
 class Presenter: MainViewPresenterProtocol {
   
-    var data: FilmsModel? = FilmsModel(id: 10, original_title: "title")
+    var data: FilmsModel? = FilmsModel(id: 1, original_title: "title", urlImage: "String")
     
     weak var view: MainViewProtocol?
     let network: NetworkManagerProtocol!
