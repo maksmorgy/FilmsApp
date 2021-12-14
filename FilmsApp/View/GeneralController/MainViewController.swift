@@ -9,11 +9,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    
     var myTableView = UITableView()
     var film: FilmsModel?
     var presenter: MainViewPresenterProtocol?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +20,8 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
     }
+    
     init(presenter: MainViewPresenterProtocol) {
-        
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
         self.presenter?.view = self        
@@ -47,25 +45,16 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return presenter?.moviesSections.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return presenter?.moviesSections[section].urlImage.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-        print("///////////")
-        presenter?.updateCollection()
-       // collectionDelegate?.updateCollection()
-//        DispatchQueue.main.async {
-//            let film = self.presenter?.data?.urlImage
-//            self.cell1.myImageView.image = film?[0]
-//        }
-        
-        //tableView.reloadData()
-
+        cell.setImages(presenter?.moviesSections[indexPath.item].urlImage ?? [])
         return cell
     }
     
@@ -74,7 +63,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let newViewController = ListViewController()
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
-    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
@@ -104,13 +92,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: MainViewProtocol {
     func succes() {
         myTableView.reloadData()
-        
     }
     
     func failure(error: Error) {
         print(error.localizedDescription)
     }
-    
-    
 }
 

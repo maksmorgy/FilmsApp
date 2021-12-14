@@ -3,8 +3,7 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     
-    var presenter: CollectionProtocol?
-    var data: FilmsModel?
+    private var images: [UIImage] = []
     
     lazy var collectionView: UICollectionView = { [unowned self] in
         let layout = UICollectionViewFlowLayout()
@@ -21,25 +20,16 @@ class TableViewCell: UITableViewCell {
         v.backgroundColor = .white
         return v
     }()
-    
-//    init(presenter: CollectionProtocol) {
-//        var coder = NSCoder()
-//        super.init(coder: coder)!
-//        self.presenter = self
-//
-//    }
 
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.presenter = self
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
     
@@ -47,34 +37,27 @@ class TableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func setImages(_ images: [UIImage]) {
+        self.images = images
+        collectionView.reloadData()
+    }
 }
-
-
 
 extension TableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! MyCollectionViewCell
-        cell.myImageView.image = UIImage(systemName: "scribble")
-        //cell.myImageView.image = self.data?.urlImage[0]
-        
+        cell.myImageView.image = images[indexPath.item]
+        cell.backgroundColor = .yellow
         return cell
     }
 }
+
 extension TableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/5, height: collectionView.frame.height)
     }
-    
 }
-
-extension TableViewCell: CollectionProtocol {
-    func updateData(data: FilmsModel?) {
-        print("collection - \(data)")
-        self.data = data
-    }
-}
-
