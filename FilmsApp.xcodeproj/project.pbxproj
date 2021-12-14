@@ -15,14 +15,12 @@
 		C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113718275E74EA003E7DEA /* MainPresenter.swift */; };
 		C1113720275F4489003E7DEA /* FilmsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111371F275F4489003E7DEA /* FilmsModel.swift */; };
 		C1113726275FBA8C003E7DEA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113725275FBA8C003E7DEA /* NetworkManager.swift */; };
-		C1B11F48276768B600168892 /* DetailView in Resources */ = {isa = PBXBuildFile; fileRef = C1B11F45276768B600168892 /* DetailView */; };
-		C1B11F49276768B600168892 /* GeneralView in Resources */ = {isa = PBXBuildFile; fileRef = C1B11F46276768B600168892 /* GeneralView */; };
-		C1B11F4A276768B600168892 /* ListView in Resources */ = {isa = PBXBuildFile; fileRef = C1B11F47276768B600168892 /* ListView */; };
-		C1B11F4E2767691500168892 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F4B2767691500168892 /* MyCollectionViewCell.swift */; };
-		C1B11F4F2767691500168892 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F4C2767691500168892 /* MainCell.swift */; };
-		C1B11F502767691500168892 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F4D2767691500168892 /* MainViewController.swift */; };
-		C1B11F522767691A00168892 /* ListViewControllew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F512767691A00168892 /* ListViewControllew.swift */; };
 		C1B11F542767694700168892 /* FilmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F532767694700168892 /* FilmData.swift */; };
+		C1B11F5B2767DA3C00168892 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F582767DA3C00168892 /* MyCollectionViewCell.swift */; };
+		C1B11F5C2767DA3C00168892 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F592767DA3C00168892 /* MainViewController.swift */; };
+		C1B11F5D2767DA3C00168892 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F5A2767DA3C00168892 /* MainCell.swift */; };
+		C1B11F5E2767DA6800168892 /* ListViewControllew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F562767D97B00168892 /* ListViewControllew.swift */; };
+		C1B11F62276898C700168892 /* DataiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F61276898C700168892 /* DataiViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,14 +34,12 @@
 		C1113718275E74EA003E7DEA /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C111371F275F4489003E7DEA /* FilmsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsModel.swift; sourceTree = "<group>"; };
 		C1113725275FBA8C003E7DEA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		C1B11F45276768B600168892 /* DetailView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DetailView; sourceTree = "<group>"; };
-		C1B11F46276768B600168892 /* GeneralView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GeneralView; sourceTree = "<group>"; };
-		C1B11F47276768B600168892 /* ListView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ListView; sourceTree = "<group>"; };
-		C1B11F4B2767691500168892 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
-		C1B11F4C2767691500168892 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
-		C1B11F4D2767691500168892 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		C1B11F512767691A00168892 /* ListViewControllew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllew.swift; sourceTree = "<group>"; };
 		C1B11F532767694700168892 /* FilmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmData.swift; sourceTree = "<group>"; };
+		C1B11F562767D97B00168892 /* ListViewControllew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllew.swift; sourceTree = "<group>"; };
+		C1B11F582767DA3C00168892 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
+		C1B11F592767DA3C00168892 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		C1B11F5A2767DA3C00168892 /* MainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
+		C1B11F61276898C700168892 /* DataiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataiViewController.swift; path = ../../../../../Documents/DataiViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,13 +104,9 @@
 		C1113716275E74AB003E7DEA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C1B11F4C2767691500168892 /* MainCell.swift */,
-				C1B11F4D2767691500168892 /* MainViewController.swift */,
-				C1B11F4B2767691500168892 /* MyCollectionViewCell.swift */,
-				C1B11F512767691A00168892 /* ListViewControllew.swift */,
-				C1B11F45276768B600168892 /* DetailView */,
-				C1B11F46276768B600168892 /* GeneralView */,
-				C1B11F47276768B600168892 /* ListView */,
+				C1B11F572767DA2600168892 /* GeneralController */,
+				C1B11F5F276805EE00168892 /* ListController */,
+				C1B11F602768060100168892 /* DetailController */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -123,10 +115,36 @@
 			isa = PBXGroup;
 			children = (
 				C111371F275F4489003E7DEA /* FilmsModel.swift */,
-				C1113725275FBA8C003E7DEA /* NetworkManager.swift */,
 				C1B11F532767694700168892 /* FilmData.swift */,
+				C1113725275FBA8C003E7DEA /* NetworkManager.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C1B11F572767DA2600168892 /* GeneralController */ = {
+			isa = PBXGroup;
+			children = (
+				C1B11F592767DA3C00168892 /* MainViewController.swift */,
+				C1B11F5A2767DA3C00168892 /* MainCell.swift */,
+				C1B11F582767DA3C00168892 /* MyCollectionViewCell.swift */,
+			);
+			path = GeneralController;
+			sourceTree = "<group>";
+		};
+		C1B11F5F276805EE00168892 /* ListController */ = {
+			isa = PBXGroup;
+			children = (
+				C1B11F562767D97B00168892 /* ListViewControllew.swift */,
+			);
+			path = ListController;
+			sourceTree = "<group>";
+		};
+		C1B11F602768060100168892 /* DetailController */ = {
+			isa = PBXGroup;
+			children = (
+				C1B11F61276898C700168892 /* DataiViewController.swift */,
+			);
+			path = DetailController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,10 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1B11F49276768B600168892 /* GeneralView in Resources */,
 				C111370D275E745A003E7DEA /* LaunchScreen.storyboard in Resources */,
-				C1B11F4A276768B600168892 /* ListView in Resources */,
-				C1B11F48276768B600168892 /* DetailView in Resources */,
 				C111370A275E745A003E7DEA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,14 +218,15 @@
 			files = (
 				C1B11F542767694700168892 /* FilmData.swift in Sources */,
 				C1113726275FBA8C003E7DEA /* NetworkManager.swift in Sources */,
-				C1B11F4E2767691500168892 /* MyCollectionViewCell.swift in Sources */,
+				C1B11F5B2767DA3C00168892 /* MyCollectionViewCell.swift in Sources */,
 				C1113720275F4489003E7DEA /* FilmsModel.swift in Sources */,
-				C1B11F522767691A00168892 /* ListViewControllew.swift in Sources */,
+				C1B11F5D2767DA3C00168892 /* MainCell.swift in Sources */,
 				C1113708275E7459003E7DEA /* FilmsApp.xcdatamodeld in Sources */,
+				C1B11F62276898C700168892 /* DataiViewController.swift in Sources */,
 				C11136FE275E7459003E7DEA /* AppDelegate.swift in Sources */,
+				C1B11F5C2767DA3C00168892 /* MainViewController.swift in Sources */,
+				C1B11F5E2767DA6800168892 /* ListViewControllew.swift in Sources */,
 				C1113700275E7459003E7DEA /* SceneDelegate.swift in Sources */,
-				C1B11F502767691500168892 /* MainViewController.swift in Sources */,
-				C1B11F4F2767691500168892 /* MainCell.swift in Sources */,
 				C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

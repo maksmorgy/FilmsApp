@@ -11,14 +11,21 @@ protocol MainViewPresenterProtocol: AnyObject {
     func getData()
     var data: FilmsModel? { get set }
     var view: MainViewProtocol? { get set }
+    func updateCollection()
+}
+
+protocol CollectionProtocol: AnyObject {
+    func updateData(data: FilmsModel?)
 }
 
 class Presenter: MainViewPresenterProtocol {
-  
-    var data: FilmsModel? = FilmsModel(id: 1, original_title: "title", urlImage: "String")
+    
+    
+    var data: FilmsModel?
     
     weak var view: MainViewProtocol?
     let network: NetworkManagerProtocol!
+    var collection: CollectionProtocol?
     
     
     
@@ -26,6 +33,12 @@ class Presenter: MainViewPresenterProtocol {
         
         self.network = network
         self.getData()
+        
+    }
+    
+    func updateCollection() {
+        print("collection data - \(data)")
+        collection?.updateData(data: self.data)
     }
     
     func getData() {
@@ -34,6 +47,7 @@ class Presenter: MainViewPresenterProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case.success(let data):
+                    print("data - \(data)")
                     self.data = data
                     self.view?.succes()
                 case.failure(let error):
@@ -43,4 +57,6 @@ class Presenter: MainViewPresenterProtocol {
         }
     }
 }
+
+
 

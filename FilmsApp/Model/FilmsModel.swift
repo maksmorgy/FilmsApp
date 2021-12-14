@@ -1,9 +1,8 @@
 import Foundation
 import UIKit
 
-struct FilmsModel: Codable {
+struct FilmsModel {
     
-    var id: Int
-    var original_title: String
-    var urlImage: String
+    var title: [String]
+    var urlImage: [UIImage]
 }

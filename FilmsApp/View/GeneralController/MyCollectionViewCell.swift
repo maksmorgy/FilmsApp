@@ -32,4 +32,3 @@ class MyCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

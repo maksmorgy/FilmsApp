@@ -9,10 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    
     var myTableView = UITableView()
     var film: FilmsModel?
     var presenter: MainViewPresenterProtocol?
-    
     
     
     override func viewDidLoad() {
@@ -21,15 +21,12 @@ class ViewController: UIViewController {
         self.navigationItem.title = "Films"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        //myTableView.reloadData()
-        
     }
     init(presenter: MainViewPresenterProtocol) {
         
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        self.presenter?.view = self
-        
+        self.presenter?.view = self        
     }
     
     required init?(coder: NSCoder) {
@@ -50,7 +47,7 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,17 +56,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-//         if let film = presenter?.data 
+        print("///////////")
+        presenter?.updateCollection()
+       // collectionDelegate?.updateCollection()
+//        DispatchQueue.main.async {
+//            let film = self.presenter?.data?.urlImage
+//            self.cell1.myImageView.image = film?[0]
+//        }
+        
+        //tableView.reloadData()
 
         return cell
     }
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
         guard let section = sender?.view?.tag else { return }
-       // performSegue(withIdentifier: "segue", sender: nil)
         let newViewController = ListViewController()
         self.navigationController?.pushViewController(newViewController, animated: true)
-        print("tapped on \(section)")
     }
     
     

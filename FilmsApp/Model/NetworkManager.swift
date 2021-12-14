@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol NetworkManagerProtocol {
     func performeRequest(completion: @escaping (Result<FilmsModel, Error>) -> Void)
@@ -15,7 +16,7 @@ class NetworkManager: NetworkManagerProtocol {
 //    }
     
     func performeRequest( completion: @escaping (Result<FilmsModel, Error>) -> Void) {
-        let urlSttring = "https://api.themoviedb.org/3/movie/550?api_key=e2e4bcb7d129a3f2fc10147b899a604d"
+        let urlSttring = "https://imdb-api.com/API/IMDbList/k_1aoi0vnf/ls093462543"
         if let url = URL(string: urlSttring) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) {
@@ -41,15 +42,18 @@ class NetworkManager: NetworkManagerProtocol {
         
         do {
             let decodedData = try decoder.decode(FilmData.self, from: filmData)
-            let id = decodedData.id
-            let title = decodedData.original_title
-            let poster = decodedData.poster_path
-            let homepage = decodedData.homepage
-            let url = homepage + poster
+            let title = [decodedData.items[0].title]
+            let urlImage = [decodedData.items[1].image]
             
-            //let image = decodedData.poster_path
-            //let poster = decodedData.homepage
-            let film = FilmsModel(id: id, original_title: title, urlImage: url)
+            var myImage = [UIImage()]
+            let url = URL(string: urlImage[0])!
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    myImage[0] = image
+                }
+            }
+            
+            let film = FilmsModel(title: title, urlImage: myImage)
             print(film)
             return film
         } catch  {
