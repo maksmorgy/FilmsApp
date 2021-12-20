@@ -15,8 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
+        let endpoints = DefaultMoviesEnpdoints()
         window?.windowScene = windowScene
-        let mainVC = ViewController(presenter: Presenter(network: NetworkManager()))
+        let mainVC = ViewController(presenter: Presenter(dataTransferService: dataTransferService, endpoints: endpoints))
         let navVC = UINavigationController(rootViewController: mainVC)
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()

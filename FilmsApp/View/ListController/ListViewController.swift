@@ -3,11 +3,20 @@ import UIKit
 
 class ListViewController: UIViewController {
     var myTableView = UITableView()
-    
+    var data: FilmsCollection?
     override func viewDidLoad() {
         self.navigationItem.title = "Films"
         createTableView()
     }
+    init(data: FilmsCollection ) {
+        self.data = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func createTableView() {
         myTableView = UITableView(frame: view.bounds, style: .plain)
         self.view.addSubview(myTableView)

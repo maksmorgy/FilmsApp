@@ -3,7 +3,7 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     
-    private var images: [UIImage] = []
+    private var films: [URL] = []
     
     lazy var collectionView: UICollectionView = { [unowned self] in
         let layout = UICollectionViewFlowLayout()
@@ -37,20 +37,29 @@ class TableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func setImages(_ images: [UIImage]) {
-        self.images = images
+    public func setImages(_ films: [URL]) {
+        self.films = films
         collectionView.reloadData()
     }
 }
 
 extension TableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return films.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! MyCollectionViewCell
-        cell.myImageView.image = images[indexPath.item]
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: self!.films[indexPath.row] ) {
+                        if let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                cell.myImageView.image = image
+                            }
+                        }
+                    }
+                }
+        
         cell.backgroundColor = .yellow
         return cell
     }

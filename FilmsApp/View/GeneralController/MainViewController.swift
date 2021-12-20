@@ -1,16 +1,9 @@
-//
-//  ViewController.swift
-//  FilmsApp
-//
-//  Created by Максим Моргун on 06.12.2021.
-//
-
 import UIKit
 
 class ViewController: UIViewController {
     
     var myTableView = UITableView()
-    var film: FilmsModel?
+    var film: FilmsCollection?
     var presenter: MainViewPresenterProtocol?
     
     override func viewDidLoad() {
@@ -33,7 +26,6 @@ class ViewController: UIViewController {
     
     private func createTableView() {
         myTableView = UITableView(frame: view.bounds, style: .plain)
-        //create constraints for myTableView
         self.view.addSubview(myTableView)
         self.myTableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
         self.myTableView.delegate = self
@@ -45,22 +37,27 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter?.moviesSections.count ?? 0
+        return presenter?.moviesSections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.moviesSections[section].urlImage.count ?? 0
+        //return presenter?.moviesSections[section].urlImage.count ?? 0
+        return presenter?.moviesSections?[section].films.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-        cell.setImages(presenter?.moviesSections[indexPath.item].urlImage ?? [])
+        cell.setImages(presenter?.moviesSections?[indexPath.section].films.map({ film in
+            let url = URL(string: film.image)
+            return url!
+        }) ?? [] )
+        
         return cell
     }
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
         guard let section = sender?.view?.tag else { return }
-        let newViewController = ListViewController()
+        let newViewController = ListViewController(data: (presenter?.moviesSections?[section])!)
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
     
@@ -70,7 +67,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let label = UILabel(frame: CGRect(x: 5, y: 20, width: 200, height: 40))
         label.text = genre[section]
         view.addSubview(label)
-
+        
+        //presenter.getData(according to pressed section)
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(headerTapped(_:))
@@ -91,7 +89,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ViewController: MainViewProtocol {
     func succes() {
-        myTableView.reloadData()
+        DispatchQueue.main.async {
+            self.myTableView.reloadData()
+        }
+        
     }
     
     func failure(error: Error) {
