@@ -72,6 +72,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 //        self.customView.addSubview(label)
 //    }
     
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
        let genre = ["Top Films", "Comedy", "Action"]
        let view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
