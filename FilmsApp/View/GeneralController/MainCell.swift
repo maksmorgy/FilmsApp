@@ -1,71 +1,69 @@
 import Foundation
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class MainCell: UITableViewCell {
     
-    private var films: [URL] = []
+    private var imageURLs: [URL] = []
+    let cell = "CollectionCell"
     
-    lazy var collectionView: UICollectionView = { [unowned self] in
+    lazy var moviesCollectionView: UICollectionView = { [self] in
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5
         layout.scrollDirection = .horizontal
-        let v = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.delegate = self
-        v.dataSource = self
-        v.isPagingEnabled = true
-        v.isScrollEnabled = true
-        v.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: "CollectionCell")
-        v.backgroundColor = .white
-        return v
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.isPagingEnabled = true
+        collectionView.isScrollEnabled = true
+        collectionView.register(CollectionListCell.self, forCellWithReuseIdentifier: cell)
+        collectionView.backgroundColor = .white
+        return collectionView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
-        ])
+        contentView.addSubview(moviesCollectionView)
+        moviesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        configureCollectionViewLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    func configureCollectionViewLayout() {
+        NSLayoutConstraint.activate([
+            moviesCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            moviesCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            moviesCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            moviesCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+        ])
+    }
     
-    public func setImages(_ films: [URL]) {
-        self.films = films
-        collectionView.reloadData()
+    public func setImages(_ url: [URL]) {
+        self.imageURLs = url
+        moviesCollectionView.reloadData()
     }
 }
 
-extension TableViewCell: UICollectionViewDataSource {
+extension MainCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return films.count
+        return imageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! MyCollectionViewCell
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: self!.films[indexPath.row] ) {
-                        if let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                cell.myImageView.image = image
-                            }
-                        }
-                    }
-                }
-        
-        cell.backgroundColor = .yellow
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell, for: indexPath)
+        if let customCell = cell as? CollectionListCell {
+            let url = imageURLs[indexPath.row]
+            customCell.setData(url: url)
+            return customCell
+        }
         return cell
     }
 }
 
-extension TableViewCell: UICollectionViewDelegateFlowLayout {
+extension MainCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/5, height: collectionView.frame.height)
     }

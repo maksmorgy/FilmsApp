@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import Common
 
 public protocol NetworkLogger {
     func log(request: URLRequest)

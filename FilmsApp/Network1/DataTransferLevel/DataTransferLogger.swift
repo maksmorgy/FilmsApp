@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import Common
 
 public protocol DataTransferLogger {
     func log(decodingError: Error)

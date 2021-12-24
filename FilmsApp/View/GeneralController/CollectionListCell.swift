@@ -1,9 +1,9 @@
 import Foundation
 import UIKit
 
-class MyCollectionViewCell: UICollectionViewCell {
+class CollectionListCell: UICollectionViewCell {
     
-        var myImageView: UIImageView = {
+    var myImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
@@ -13,9 +13,12 @@ class MyCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(myImageView)
         backgroundColor = .black
         configureViews()
-                
-        
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
      func configureViews() {
         myImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -26,9 +29,16 @@ class MyCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func setData(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                        if let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self?.myImageView.image = image
+                            }
+                        }
+                    }
+                }
     }
+ 
 }

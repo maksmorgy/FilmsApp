@@ -6,7 +6,8 @@ public protocol MoviesEnpdoints {
 }
 
 public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
-    let apiKey = "k_1aoi0vnf"
+    // use keychain
+   private let apiKey = "k_1aoi0vnf"
     
     public func topMovies() -> Endpoint<MoviesResponse> {
         return .init(
@@ -26,7 +27,17 @@ public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
 }
 
 public struct MoviesResponse: Decodable {
-    var items: [Item]
+    var items: [ItemDTO]
+}
+
+public struct FilmsCategoryResponse: Codable {
+    let results: [ItemDTO]
+}
+
+struct ItemDTO: Codable {
+    let image: String
+    let title: String
+   
 }
 
 struct MoviesQueries: Encodable {

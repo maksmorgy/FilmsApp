@@ -3,11 +3,14 @@ import UIKit
 
 class ListViewController: UIViewController {
     var myTableView = UITableView()
-    var data: FilmsCollection?
+    var data: FilmsCollection
+    let cell = "cell"
+    
     override func viewDidLoad() {
         self.navigationItem.title = "Films"
         createTableView()
     }
+    
     init(data: FilmsCollection ) {
         self.data = data
         super.init(nibName: nil, bundle: nil)
@@ -20,33 +23,48 @@ class ListViewController: UIViewController {
     private func createTableView() {
         myTableView = UITableView(frame: view.bounds, style: .plain)
         self.view.addSubview(myTableView)
-        self.myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        createListCell()
+    }
+    func createListCell() {
+        self.myTableView.register(TableViewListCell.self, forCellReuseIdentifier: cell)
         self.myTableView.delegate = self
         self.myTableView.dataSource = self
-        //self.myTableView.backgroundColor = .white
-        //myTableView.isUserInteractionEnabled = true
     }
 }
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        return data.films.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "films"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cell, for: indexPath)
+        
+        if let customCell = cell as? TableViewListCell {
+        let text = data.films[indexPath.row].title
+            
+            if let url: URL? = data.films[indexPath.row].imageURL {
+            DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url!) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        customCell.myImage.image = image
+                        customCell.myLabel.text = text
+                    }
+                }
+            }
+        }
+        }
+            return customCell
+        }
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         myTableView.deselectRow(at: indexPath, animated: true )
        let cell =  tableView.cellForRow(at: indexPath)
-        cell?.textLabel?.text = "text"
-        print("List")
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-    
-    
 }
