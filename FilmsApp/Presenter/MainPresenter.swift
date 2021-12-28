@@ -6,17 +6,21 @@ public protocol MainPresenterDelegate: AnyObject {
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
-    var moviesCollection: [FilmsCollection]? { get set }
-    var moviesCollection2: [FilmsCollection]? { get set }
+    var filmsCollection: [FilmsCollection]? { get set }
+    var filmsCollection2: [FilmsCollection]? { get set }
     var delegate: MainPresenterDelegate? { get set }
+    var filmDescription: DetailFilm? { get set }
     
+    func getId(id: String)
     func getData()
 }
 
 public class MainPresenter: MainViewPresenterProtocol {
-    public var moviesCollection: [FilmsCollection]? = []
-    public var moviesCollection2: [FilmsCollection]? = []
-    
+  
+    public var filmsCollection: [FilmsCollection]? = []
+    public var filmsCollection2: [FilmsCollection]? = []
+    var filmDescription: DetailFilm?
+
     public weak var delegate: MainPresenterDelegate?
     private let dataTransferService: DataTransferService
     private let endpoints: MoviesEnpdoints
@@ -28,30 +32,32 @@ public class MainPresenter: MainViewPresenterProtocol {
     }
     
     func getData() {
-        dataTransferService.request(with: endpoints.movies(with: "action")) {  [weak self] result in
+        let actionTitle = "action"
+        let comedyTitle = "comedy"
+        let topTitle = "Top Films"
+        dataTransferService.request(with: endpoints.movies(with: actionTitle)) {  [weak self] result in
             switch result {
             case .success(let moviesResponse):
                 let movies = moviesResponse.results.map { item in
-                    return Film(title: item.title, imageURL: URL(string: item.image)!)
+                    return Film(filmId: item.id, title: item.title, imageURL: URL(string: item.image))
                 }
-                self?.moviesCollection?.append(FilmsCollection(films: movies))
+                self?.filmsCollection?.append(FilmsCollection(films: movies, title: actionTitle))
                 self?.delegate?.fetchedMovies()
             case .failure(let error):
                 self?.delegate?.failedToFetchMovies(error: error)
             }
         }
         
-        dataTransferService.request(with: endpoints.movies(with: "comedy")) {  [weak self] result in
+        dataTransferService.request(with: endpoints.movies(with: comedyTitle)) {  [weak self] result in
             switch result {
             case .success(let moviesResponse):
                 let movies = moviesResponse.results.map { item in
-                    return Film(title: item.title, imageURL: URL(string: item.image)!)
+                    return Film(filmId: item.id, title: item.title, imageURL: URL(string: item.image))
                 }
-                self?.moviesCollection?.append(FilmsCollection(films: movies))
+                self?.filmsCollection?.append(FilmsCollection(films: movies, title: comedyTitle))
                 self?.delegate?.fetchedMovies()
             case .failure(let error):
                 self?.delegate?.failedToFetchMovies(error: error)
-
             }
         }
         
@@ -59,17 +65,29 @@ public class MainPresenter: MainViewPresenterProtocol {
             switch result {
             case .success(let moviesResponse):
                 let movies = moviesResponse.items.map { item in
-                    return Film(title: item.title, imageURL: URL(string: item.image)!)
+                    return Film(filmId: item.id, title: item.title, imageURL: URL(string: item.image))
                 }
-                self?.moviesCollection?.append(FilmsCollection(films: movies))
+                self?.filmsCollection?.append(FilmsCollection(films: movies, title: topTitle))
                 self?.delegate?.fetchedMovies()
-                //Remove debug code
             case .failure(let error):
                 self?.delegate?.failedToFetchMovies(error: error)
-
             }
         }
     }
+    
+    func getId(id: String) {
+        dataTransferService.request(with: endpoints.movie(with: id)) {  [weak self] result in
+            switch result {
+            case .success(let movieResponse):
+                let movie = DetailFilm(id: movieResponse.id, title: movieResponse.title, genres: movieResponse.genres, countries: movieResponse.countries, imDBRating: movieResponse.countries)
+                self?.filmDescription = movie
+                
+            case .failure(let error):
+                print("Description error: \(error)")
+            }
+        }
+    }
+    
 }
 
 

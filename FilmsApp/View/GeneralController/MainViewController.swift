@@ -1,8 +1,39 @@
 import UIKit
 
+class CustomView: UIView {
+    var labelText: String
+    init(frame: CGRect, labelText: String) {
+        self.labelText = labelText
+        super.init(frame: frame)
+        createSubViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func createSubViews() {
+        backgroundColor = .white
+        let label = UILabel()
+        label.textColor = UIColor.black
+        label.text = labelText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.medium)
+        addSubview(label)
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+    }
+}
+
 class MainViewController: UIViewController {
     
-    var moviesCollectionsTableView = UITableView()
+    var moviesCollectionsTableView: UITableView = {
+        let movieCollection = UITableView()
+        return movieCollection
+    }()
     var presenter: MainViewPresenterProtocol?
     var customView = UIView()
     
@@ -28,18 +59,25 @@ class MainViewController: UIViewController {
         self.view.addSubview(moviesCollectionsTableView)
         createMoviesCollectionView()
     }
+    
     func createMoviesCollectionView() {
-        self.moviesCollectionsTableView.register(MainCell.self, forCellReuseIdentifier: "cell")
+        self.moviesCollectionsTableView.register(MoviesCollectionCell.self, forCellReuseIdentifier: "cell")
         self.moviesCollectionsTableView.delegate = self
         self.moviesCollectionsTableView.dataSource = self
         self.moviesCollectionsTableView.backgroundColor = .white
         self.moviesCollectionsTableView.isUserInteractionEnabled = true
     }
+    
+    func getId(id: String) -> DetailFilm? {
+        presenter?.getId(id: id)
+        let film = presenter?.filmDescription
+        return film
+    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter?.moviesCollection?.count ?? 0
+        return presenter?.filmsCollection?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -48,10 +86,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        if let customCell = cell as? MainCell {
-            let images: [URL] = presenter?.moviesCollection?[indexPath.section].films.map({ film  in
+        if let customCell = cell as? MoviesCollectionCell {
+            let images: [URL] = presenter?.filmsCollection?[indexPath.section].films.map({ film in
                 let image = film.imageURL
-                return image }) ?? []
+                return image! }) ?? []
             customCell.setImages(images)
             return customCell
         }
@@ -59,26 +97,17 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
-        guard let section = sender?.view?.tag else { return }
-        guard let film = presenter?.moviesCollection?[section] else { return }
+        guard let section = sender?.view?.tag, let film = presenter?.filmsCollection?[section] else { return }
         let newViewController = ListViewController(data: film)
-        self.navigationController?.pushViewController(newViewController, animated: true)
+        navigationController?.pushViewController(newViewController, animated: true)
         newViewController.myTableView.reloadData()
     }
     
-//    func createCustomView() {
-//        customView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
-//        var label = UILabel(frame: CGRect(x: 5, y: 20, width: 200, height: 40))
-//        self.customView.addSubview(label)
-//    }
-    
-    
+    // createCustomView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-       let genre = ["Top Films", "Comedy", "Action"]
-       let view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
-       let label = UILabel(frame: CGRect(x: 5, y: 20, width: 200, height: 40))
-        label.text = genre[section]
-        view.addSubview(label)
+        var genre = presenter?.filmsCollection?[section].title
+        var view = CustomView(frame: CGRect(x: 0, y: 0, width: 300, height: 44), labelText: genre ?? "")
+        
         
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self,

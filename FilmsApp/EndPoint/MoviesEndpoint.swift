@@ -3,6 +3,7 @@ import Foundation
 public protocol MoviesEnpdoints {
     func topMovies() -> Endpoint<MoviesResponse>
     func movies(with genre: String) -> Endpoint<FilmsCategoryResponse>
+    func movie(with filmId: String) -> Endpoint<SummaryFilmResponse>
 }
 
 public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
@@ -24,6 +25,13 @@ public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
             method: .get
         )
     }
+    
+    public func movie(with filmId: String) -> Endpoint<SummaryFilmResponse> {
+        return .init(
+            path: "/API/Title/\(apiKey)/\(filmId)",
+            method: .get
+        )
+    }
 }
 
 public struct MoviesResponse: Decodable {
@@ -34,7 +42,17 @@ public struct FilmsCategoryResponse: Codable {
     let results: [ItemDTO]
 }
 
+public struct SummaryFilmResponse: Codable {
+    //let image: String
+    let id: String
+    let title: String
+    let genres: String
+    let countries: String
+    let imDBRating: String
+}
+
 struct ItemDTO: Codable {
+    let id: String
     let image: String
     let title: String
    

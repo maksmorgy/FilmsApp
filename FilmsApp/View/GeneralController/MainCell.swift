@@ -1,12 +1,12 @@
 import Foundation
 import UIKit
 
-class MainCell: UITableViewCell {
+class MoviesCollectionCell: UITableViewCell {
     
     private var imageURLs: [URL] = []
     let cell = "CollectionCell"
     
-    lazy var moviesCollectionView: UICollectionView = { [self] in
+    lazy var moviesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5
@@ -17,15 +17,13 @@ class MainCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
-        collectionView.register(CollectionListCell.self, forCellWithReuseIdentifier: cell)
+        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: cell)
         collectionView.backgroundColor = .white
         return collectionView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(moviesCollectionView)
-        moviesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         configureCollectionViewLayout()
     }
     
@@ -33,6 +31,8 @@ class MainCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     func configureCollectionViewLayout() {
+        contentView.addSubview(moviesCollectionView)
+        moviesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             moviesCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             moviesCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
@@ -41,29 +41,29 @@ class MainCell: UITableViewCell {
         ])
     }
     
-    public func setImages(_ url: [URL]) {
-        self.imageURLs = url
+    public func setImages(_ urls: [URL]) {
+        self.imageURLs = urls
         moviesCollectionView.reloadData()
     }
 }
 
-extension MainCell: UICollectionViewDataSource {
+extension MoviesCollectionCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell, for: indexPath)
-        if let customCell = cell as? CollectionListCell {
+        if let customCell = cell as? MovieCell {
             let url = imageURLs[indexPath.row]
-            customCell.setData(url: url)
+            customCell.setURL(url: url)
             return customCell
         }
         return cell
     }
 }
 
-extension MainCell: UICollectionViewDelegateFlowLayout {
+extension MoviesCollectionCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/5, height: collectionView.frame.height)
     }

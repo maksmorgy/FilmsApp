@@ -42,6 +42,7 @@
 		C1B11F5E2767DA6800168892 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F562767D97B00168892 /* ListViewController.swift */; };
 		C1D7F4AF27718248006F3AE3 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7F4AE27718248006F3AE3 /* ListCell.swift */; };
 		C1D7F4B2277279D2006F3AE3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7F4B1277279D2006F3AE3 /* Extension.swift */; };
+		C1D7F4B527754710006F3AE3 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7F4B427754710006F3AE3 /* DetailController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		C1B11F5A2767DA3C00168892 /* MainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		C1D7F4AE27718248006F3AE3 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		C1D7F4B1277279D2006F3AE3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		C1D7F4B427754710006F3AE3 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			children = (
 				C1B11F572767DA2600168892 /* GeneralController */,
 				C1B11F5F276805EE00168892 /* ListController */,
+				C1D7F4B3277546B0006F3AE3 /* DetailController */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -258,6 +261,14 @@
 			path = ListController;
 			sourceTree = "<group>";
 		};
+		C1D7F4B3277546B0006F3AE3 /* DetailController */ = {
+			isa = PBXGroup;
+			children = (
+				C1D7F4B427754710006F3AE3 /* DetailController.swift */,
+			);
+			path = DetailController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -339,6 +350,7 @@
 				C1742F4A276CDA2500C33ACD /* DataTransferLogger.swift in Sources */,
 				C1D7F4AF27718248006F3AE3 /* ListCell.swift in Sources */,
 				C1742F50276CDA2500C33ACD /* Server.swift in Sources */,
+				C1D7F4B527754710006F3AE3 /* DetailController.swift in Sources */,
 				C1742F53276CDA2500C33ACD /* JSONEncoderExtensions.swift in Sources */,
 				C1B11F5D2767DA3C00168892 /* MainCell.swift in Sources */,
 				C1113708275E7459003E7DEA /* FilmsApp.xcdatamodeld in Sources */,

@@ -2,11 +2,16 @@ import Foundation
 import UIKit
 
 class ListViewController: UIViewController {
-    var myTableView = UITableView()
+    
+    var myTableView: UITableView = {
+        let table = UITableView()
+        return table
+    }()
     var data: FilmsCollection
     let cell = "cell"
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.navigationItem.title = "Films"
         createTableView()
     }
@@ -22,13 +27,14 @@ class ListViewController: UIViewController {
     
     private func createTableView() {
         myTableView = UITableView(frame: view.bounds, style: .plain)
-        self.view.addSubview(myTableView)
+        view.addSubview(myTableView)
         createListCell()
     }
+    
     func createListCell() {
-        self.myTableView.register(TableViewListCell.self, forCellReuseIdentifier: cell)
-        self.myTableView.delegate = self
-        self.myTableView.dataSource = self
+        myTableView.register(MovieListCell.self, forCellReuseIdentifier: cell)
+        myTableView.delegate = self
+        myTableView.dataSource = self
     }
 }
 
@@ -40,7 +46,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cell, for: indexPath)
         
-        if let customCell = cell as? TableViewListCell {
+        if let customCell = cell as? MovieListCell {
         let text = data.films[indexPath.row].title
             
             if let url: URL? = data.films[indexPath.row].imageURL {
@@ -48,8 +54,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             if let data = try? Data(contentsOf: url!) {
                 if let image = UIImage(data: data) {
                     DispatchQueue.main.async {
-                        customCell.myImage.image = image
-                        customCell.myLabel.text = text
+                        customCell.movieListImage.image = image
+                        customCell.movieListLabel.text = text
                     }
                 }
             }
@@ -62,9 +68,15 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         myTableView.deselectRow(at: indexPath, animated: true )
-       let cell =  tableView.cellForRow(at: indexPath)
-    }
+        //let cell =  tableView.cellForRow(at: indexPath)
+        let filmId = data.films[indexPath.row].filmId
+        let newViewController = DetailController(id: filmId)
+        self.navigationController?.pushViewController(newViewController, animated: true)
+        }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    
+    
 }

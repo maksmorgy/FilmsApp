@@ -1,9 +1,9 @@
 import Foundation
 import UIKit
 
-class CollectionListCell: UICollectionViewCell {
+class MovieCell: UICollectionViewCell {
     
-    var myImageView: UIImageView = {
+    let myImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
@@ -29,13 +29,11 @@ class CollectionListCell: UICollectionViewCell {
         ])
     }
     
-    func setData(url: URL) {
+    func setURL(url: URL) {
         DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                        if let image = UIImage(data: data) {
+            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                             DispatchQueue.main.async {
                                 self?.myImageView.image = image
-                            }
                         }
                     }
                 }
