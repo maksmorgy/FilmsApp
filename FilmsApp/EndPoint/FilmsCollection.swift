@@ -14,10 +14,11 @@ struct Film {
 
 struct DetailFilm {
     let id: String
-    let title: String
+    let originalTitle: String
     let genres: String
     let countries: String
-    let imDBRating: String
+    let rating: String
+    let image: String
 }
 
 

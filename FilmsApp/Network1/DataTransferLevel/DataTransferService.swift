@@ -1,10 +1,3 @@
-//
-//  DataTransferService.swift
-//  
-//
-//  Created by Orest Patlyka on 17.02.2021.
-//
-
 import Foundation
 
 public enum DataTransferError: Error, Equatable {
@@ -55,6 +48,8 @@ public final class DefaultDataTransferService: DataTransferService {
         return networkService.request(request) { result in
             switch result {
             case .success(let data):
+                print(request)
+                //print(data)
                 let decodedResult: CompletionResult<T> =
                     self.decode(data: data, decoder: endpoint.responseDecoder)
                 completion(decodedResult)

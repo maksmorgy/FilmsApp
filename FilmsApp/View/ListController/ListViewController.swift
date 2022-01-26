@@ -7,6 +7,7 @@ class ListViewController: UIViewController {
         let table = UITableView()
         return table
     }()
+    
     var data: FilmsCollection
     let cell = "cell"
     
@@ -70,7 +71,9 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         myTableView.deselectRow(at: indexPath, animated: true )
         //let cell =  tableView.cellForRow(at: indexPath)
         let filmId = data.films[indexPath.row].filmId
-        let newViewController = DetailController(id: filmId)
+        let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
+        let endpoints = DefaultMoviesEnpdoints()
+        let newViewController = DetailController(id: filmId, presenter: DetailPresenter(dataTransferService: dataTransferService, endpoints: endpoints, id: filmId))
         self.navigationController?.pushViewController(newViewController, animated: true)
         }
     

@@ -79,7 +79,7 @@ public class MainPresenter: MainViewPresenterProtocol {
         dataTransferService.request(with: endpoints.movie(with: id)) {  [weak self] result in
             switch result {
             case .success(let movieResponse):
-                let movie = DetailFilm(id: movieResponse.id, title: movieResponse.title, genres: movieResponse.genres, countries: movieResponse.countries, imDBRating: movieResponse.countries)
+                let movie = DetailFilm(id: movieResponse.id!, originalTitle: movieResponse.title!, genres: movieResponse.genres!, countries: movieResponse.countries!, rating: movieResponse.imDbRating!, image: movieResponse.image!)
                 self?.filmDescription = movie
                 
             case .failure(let error):

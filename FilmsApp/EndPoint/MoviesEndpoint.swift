@@ -8,7 +8,9 @@ public protocol MoviesEnpdoints {
 
 public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
     // use keychain
-   private let apiKey = "k_1aoi0vnf"
+   //private let apiKey = "k_1aoi0vnf"
+   private let apiKey = "k_44hm08xm"
+
     
     public func topMovies() -> Endpoint<MoviesResponse> {
         return .init(
@@ -44,11 +46,12 @@ public struct FilmsCategoryResponse: Codable {
 
 public struct SummaryFilmResponse: Codable {
     //let image: String
-    let id: String
-    let title: String
-    let genres: String
-    let countries: String
-    let imDBRating: String
+    let id: String?
+    let title: String?
+    let genres: String?
+    let countries: String?
+    let imDbRating: String?
+    let image: String?
 }
 
 struct ItemDTO: Codable {

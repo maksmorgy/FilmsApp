@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C105A060278A5B3A008EF9F7 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C105A05F278A5B3A008EF9F7 /* DetailPresenter.swift */; };
+		C105A0A227907FBE008EF9F7 /* PagingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C105A0A127907FBE008EF9F7 /* PagingController.swift */; };
 		C11136FE275E7459003E7DEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11136FD275E7459003E7DEA /* AppDelegate.swift */; };
 		C1113700275E7459003E7DEA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11136FF275E7459003E7DEA /* SceneDelegate.swift */; };
 		C1113708275E7459003E7DEA /* FilmsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1113706275E7459003E7DEA /* FilmsApp.xcdatamodeld */; };
@@ -46,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C105A05F278A5B3A008EF9F7 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
+		C105A0A127907FBE008EF9F7 /* PagingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingController.swift; sourceTree = "<group>"; };
 		C11136FA275E7459003E7DEA /* FilmsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11136FD275E7459003E7DEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C11136FF275E7459003E7DEA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				C1113718275E74EA003E7DEA /* MainPresenter.swift */,
+				C105A05F278A5B3A008EF9F7 /* DetailPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				C1B11F592767DA3C00168892 /* MainViewController.swift */,
 				C1B11F5A2767DA3C00168892 /* MainCell.swift */,
 				C1B11F582767DA3C00168892 /* CollectionListCell.swift */,
+				C105A0A127907FBE008EF9F7 /* PagingController.swift */,
 			);
 			path = GeneralController;
 			sourceTree = "<group>";
@@ -349,6 +355,7 @@
 				C1742F4E276CDA2500C33ACD /* ResponseDecoder.swift in Sources */,
 				C1742F4A276CDA2500C33ACD /* DataTransferLogger.swift in Sources */,
 				C1D7F4AF27718248006F3AE3 /* ListCell.swift in Sources */,
+				C105A0A227907FBE008EF9F7 /* PagingController.swift in Sources */,
 				C1742F50276CDA2500C33ACD /* Server.swift in Sources */,
 				C1D7F4B527754710006F3AE3 /* DetailController.swift in Sources */,
 				C1742F53276CDA2500C33ACD /* JSONEncoderExtensions.swift in Sources */,
@@ -371,6 +378,7 @@
 				C1742F4F276CDA2500C33ACD /* Endpoint.swift in Sources */,
 				C1742F51276CDA2500C33ACD /* JSONDecoderExtensions.swift in Sources */,
 				C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */,
+				C105A060278A5B3A008EF9F7 /* DetailPresenter.swift in Sources */,
 				C1742F59276CDA2500C33ACD /* NetworkSessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
