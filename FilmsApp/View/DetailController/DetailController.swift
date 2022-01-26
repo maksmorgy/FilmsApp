@@ -40,6 +40,7 @@ class DetailController: UIViewController {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
         self.presenter?.delegate = self
+        
     }
     
     required init?(coder: NSCoder) {
