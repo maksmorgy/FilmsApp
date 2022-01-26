@@ -14,8 +14,6 @@
 		C1113708275E7459003E7DEA /* FilmsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1113706275E7459003E7DEA /* FilmsApp.xcdatamodeld */; };
 		C111370A275E745A003E7DEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1113709275E745A003E7DEA /* Assets.xcassets */; };
 		C111370D275E745A003E7DEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C111370B275E745A003E7DEA /* LaunchScreen.storyboard */; };
-<<<<<<< HEAD
-=======
 		C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1113718275E74EA003E7DEA /* MainPresenter.swift */; };
 		C1113720275F4489003E7DEA /* FilmsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111371F275F4489003E7DEA /* FilmsCollection.swift */; };
 		C1742F46276CDA2500C33ACD /* DownloadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1742F2A276CDA2500C33ACD /* DownloadDelegate.swift */; };
@@ -47,7 +45,6 @@
 		C1D7F4AF27718248006F3AE3 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7F4AE27718248006F3AE3 /* ListCell.swift */; };
 		C1D7F4B2277279D2006F3AE3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7F4B1277279D2006F3AE3 /* Extension.swift */; };
 		C1D7F4B527754710006F3AE3 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7F4B427754710006F3AE3 /* DetailController.swift */; };
->>>>>>> feature/browse-movies
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,8 +57,6 @@
 		C1113709275E745A003E7DEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C111370C275E745A003E7DEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C111370E275E745A003E7DEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
 		C1113718275E74EA003E7DEA /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C111371F275F4489003E7DEA /* FilmsCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCollection.swift; sourceTree = "<group>"; };
 		C1742F2A276CDA2500C33ACD /* DownloadDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadDelegate.swift; sourceTree = "<group>"; };
@@ -93,7 +88,6 @@
 		C1D7F4AE27718248006F3AE3 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		C1D7F4B1277279D2006F3AE3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C1D7F4B427754710006F3AE3 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
->>>>>>> feature/browse-movies
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,12 +122,9 @@
 			children = (
 				C1742F28276CDA2500C33ACD /* Network1 */,
 				C1113714275E748A003E7DEA /* App */,
-<<<<<<< HEAD
-=======
 				C1113717275E74B9003E7DEA /* EndPoint */,
 				C1113716275E74AB003E7DEA /* View */,
 				C1113715275E7498003E7DEA /* Presenter */,
->>>>>>> feature/browse-movies
 				C1113709275E745A003E7DEA /* Assets.xcassets */,
 				C111370B275E745A003E7DEA /* LaunchScreen.storyboard */,
 				C111370E275E745A003E7DEA /* Info.plist */,
@@ -151,8 +142,6 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-=======
 		C1113715275E7498003E7DEA /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,7 +275,6 @@
 			path = DetailController;
 			sourceTree = "<group>";
 		};
->>>>>>> feature/browse-movies
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -356,9 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				C1113708275E7459003E7DEA /* FilmsApp.xcdatamodeld in Sources */,
-=======
 				C1B11F5B2767DA3C00168892 /* CollectionListCell.swift in Sources */,
 				C1742F4B276CDA2500C33ACD /* Requestable.swift in Sources */,
 				C1742F4D276CDA2500C33ACD /* DataTransferService.swift in Sources */,
@@ -381,7 +367,6 @@
 				C1742F58276CDA2500C33ACD /* NetworkTransportService.swift in Sources */,
 				C1742F4C276CDA2500C33ACD /* RequestEncoder.swift in Sources */,
 				C1742F5C276CDA2500C33ACD /* NetworkConfig.swift in Sources */,
->>>>>>> feature/browse-movies
 				C11136FE275E7459003E7DEA /* AppDelegate.swift in Sources */,
 				C1742F49276CDA2500C33ACD /* DownloadService.swift in Sources */,
 				C1B11F5C2767DA3C00168892 /* MainViewController.swift in Sources */,
@@ -389,8 +374,6 @@
 				C1B11F5E2767DA6800168892 /* ListViewController.swift in Sources */,
 				C1742F52276CDA2500C33ACD /* URLError+Make.swift in Sources */,
 				C1113700275E7459003E7DEA /* SceneDelegate.swift in Sources */,
-<<<<<<< HEAD
-=======
 				C1742F54276CDA2500C33ACD /* HTTPMethod.swift in Sources */,
 				C1D7F4B2277279D2006F3AE3 /* Extension.swift in Sources */,
 				C1742F4F276CDA2500C33ACD /* Endpoint.swift in Sources */,
@@ -398,7 +381,6 @@
 				C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */,
 				C105A060278A5B3A008EF9F7 /* DetailPresenter.swift in Sources */,
 				C1742F59276CDA2500C33ACD /* NetworkSessionManager.swift in Sources */,
->>>>>>> feature/browse-movies
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
