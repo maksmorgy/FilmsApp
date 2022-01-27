@@ -7,7 +7,6 @@ public protocol MoviesEnpdoints {
 }
 
 public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
-    // use keychain
    //private let apiKey = "k_1aoi0vnf"
    private let apiKey = "k_44hm08xm"
 
