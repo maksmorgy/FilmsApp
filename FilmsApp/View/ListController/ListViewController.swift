@@ -53,31 +53,31 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         return data.films.count
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cell, for: indexPath)
-
+        
         if let customCell = cell as? MovieListCell {
-        let text = data.films[indexPath.row].title
-
-            if let url: URL? = data.films[indexPath.row].imageURL {
-            DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url!) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        customCell.movieListImage.image = image
-                        customCell.movieListLabel.text = text
-                    }
-                }
-            }
-        }
-        }
+            customCell.updateAppearanceFor(content: data.films[indexPath.row], image: .none)
             return customCell
         }
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? MovieListCell else { return }
+        
+        if let url: URL? = data.films[indexPath.row].imageURL {
+            DispatchQueue.global().async { [weak self] in
+                if let data = try? Data(contentsOf: url!) {
+                    if let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            cell.updateAppearanceFor(content: self?.data.films[indexPath.row], image: image)
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         myTableView.deselectRow(at: indexPath, animated: true )
