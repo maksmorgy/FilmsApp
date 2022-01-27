@@ -55,8 +55,13 @@ class MainViewController: UIViewController {
     }
     
     private func createTableView() {
-        moviesCollectionsTableView = UITableView(frame: view.bounds, style: .plain)
+        moviesCollectionsTableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(moviesCollectionsTableView)
+        moviesCollectionsTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        moviesCollectionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        moviesCollectionsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        moviesCollectionsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
         createMoviesCollectionView()
     }
     
@@ -94,7 +99,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         guard let section = sender?.view?.tag, let film = presenter?.filmsCollection?[section] else { return }
         let newViewController = ListViewController(data: film)
         navigationController?.pushViewController(newViewController, animated: true)
-        newViewController.myTableView.reloadData()
+        newViewController.listTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

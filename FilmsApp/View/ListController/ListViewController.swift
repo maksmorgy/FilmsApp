@@ -3,7 +3,7 @@ import UIKit
 
 class ListViewController: UIViewController {
     
-    var myTableView: UITableView = {
+    var listTableView: UITableView = {
         let table = UITableView()
         return table
     }()
@@ -36,15 +36,20 @@ class ListViewController: UIViewController {
     }
     
     private func createTableView() {
-        myTableView = UITableView(frame: view.bounds, style: .plain)
-        view.addSubview(myTableView)
+        listTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(listTableView)
+        listTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
         createListCell()
     }
     
     func createListCell() {
-        myTableView.register(MovieListCell.self, forCellReuseIdentifier: cell)
-        myTableView.delegate = self
-        myTableView.dataSource = self
+        listTableView.register(MovieListCell.self, forCellReuseIdentifier: cell)
+        listTableView.delegate = self
+        listTableView.dataSource = self
     }
 }
 
@@ -80,7 +85,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        myTableView.deselectRow(at: indexPath, animated: true )
+        listTableView.deselectRow(at: indexPath, animated: true )
         let filmId = data.films[indexPath.row].filmId
         let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
         let endpoints = DefaultMoviesEnpdoints()
