@@ -10,6 +10,7 @@ class ListViewController: UIViewController {
     
     var data: FilmsCollection
     let cell = "cell"
+    let context = CoreDataManager.instance.persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +29,14 @@ class ListViewController: UIViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let myDel = UIContextualAction(style: .normal, title: "Favourite") { (_, _, complitionHand) in
-            let filmTitle = self.data.films[indexPath.row].title
-            let filmImage = self.data.films[indexPath.row].imageURL
+            let film = FilmData(context: self.context)
+            film.filmTitle = self.data.films[indexPath.row].title
+            film.filmImage = self.data.films[indexPath.row].imageURL
+            CoreDataManager.instance.saveContext()
+            complitionHand(true)
         }
+        
+        
         myDel.image = UIImage(systemName: "star")
         return UISwipeActionsConfiguration(actions:[myDel])
     }
