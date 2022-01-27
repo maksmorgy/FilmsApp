@@ -38,6 +38,8 @@
 		C1742F5A276CDA2500C33ACD /* NetworkTransportResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1742F43276CDA2500C33ACD /* NetworkTransportResponse.swift */; };
 		C1742F5C276CDA2500C33ACD /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1742F45276CDA2500C33ACD /* NetworkConfig.swift */; };
 		C18D0A032770C47F009D6EBC /* MoviesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18D0A022770C47F009D6EBC /* MoviesEndpoint.swift */; };
+		C1A1892327A2DD2B00D23D9B /* FavouriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A1892227A2DD2B00D23D9B /* FavouriteController.swift */; };
+		C1A1892627A2DD9700D23D9B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A1892527A2DD9700D23D9B /* TabBarController.swift */; };
 		C1B11F5B2767DA3C00168892 /* CollectionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F582767DA3C00168892 /* CollectionListCell.swift */; };
 		C1B11F5C2767DA3C00168892 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F592767DA3C00168892 /* MainViewController.swift */; };
 		C1B11F5D2767DA3C00168892 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F5A2767DA3C00168892 /* MainCell.swift */; };
@@ -81,6 +83,8 @@
 		C1742F43276CDA2500C33ACD /* NetworkTransportResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransportResponse.swift; sourceTree = "<group>"; };
 		C1742F45276CDA2500C33ACD /* NetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		C18D0A022770C47F009D6EBC /* MoviesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesEndpoint.swift; sourceTree = "<group>"; };
+		C1A1892227A2DD2B00D23D9B /* FavouriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteController.swift; sourceTree = "<group>"; };
+		C1A1892527A2DD9700D23D9B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C1B11F562767D97B00168892 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		C1B11F582767DA3C00168892 /* CollectionListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionListCell.swift; sourceTree = "<group>"; };
 		C1B11F592767DA3C00168892 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 		C1113716275E74AB003E7DEA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C1A1892427A2DD5800D23D9B /* TabBarVC */,
+				C1A1892127A2DD1000D23D9B /* FavouriteController */,
 				C1B11F572767DA2600168892 /* GeneralController */,
 				C1B11F5F276805EE00168892 /* ListController */,
 				C1D7F4B3277546B0006F3AE3 /* DetailController */,
@@ -244,6 +250,22 @@
 				C1742F43276CDA2500C33ACD /* NetworkTransportResponse.swift */,
 			);
 			path = TransportLevel;
+			sourceTree = "<group>";
+		};
+		C1A1892127A2DD1000D23D9B /* FavouriteController */ = {
+			isa = PBXGroup;
+			children = (
+				C1A1892227A2DD2B00D23D9B /* FavouriteController.swift */,
+			);
+			path = FavouriteController;
+			sourceTree = "<group>";
+		};
+		C1A1892427A2DD5800D23D9B /* TabBarVC */ = {
+			isa = PBXGroup;
+			children = (
+				C1A1892527A2DD9700D23D9B /* TabBarController.swift */,
+			);
+			path = TabBarVC;
 			sourceTree = "<group>";
 		};
 		C1B11F572767DA2600168892 /* GeneralController */ = {
@@ -371,12 +393,14 @@
 				C1742F49276CDA2500C33ACD /* DownloadService.swift in Sources */,
 				C1B11F5C2767DA3C00168892 /* MainViewController.swift in Sources */,
 				C18D0A032770C47F009D6EBC /* MoviesEndpoint.swift in Sources */,
+				C1A1892627A2DD9700D23D9B /* TabBarController.swift in Sources */,
 				C1B11F5E2767DA6800168892 /* ListViewController.swift in Sources */,
 				C1742F52276CDA2500C33ACD /* URLError+Make.swift in Sources */,
 				C1113700275E7459003E7DEA /* SceneDelegate.swift in Sources */,
 				C1742F54276CDA2500C33ACD /* HTTPMethod.swift in Sources */,
 				C1D7F4B2277279D2006F3AE3 /* Extension.swift in Sources */,
 				C1742F4F276CDA2500C33ACD /* Endpoint.swift in Sources */,
+				C1A1892327A2DD2B00D23D9B /* FavouriteController.swift in Sources */,
 				C1742F51276CDA2500C33ACD /* JSONDecoderExtensions.swift in Sources */,
 				C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */,
 				C105A060278A5B3A008EF9F7 /* DetailPresenter.swift in Sources */,
