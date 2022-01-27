@@ -67,12 +67,6 @@ class MainViewController: UIViewController {
         self.moviesCollectionsTableView.backgroundColor = .white
         self.moviesCollectionsTableView.isUserInteractionEnabled = true
     }
-    
-//    func getId(id: String) -> DetailFilm? {
-//        presenter?.getId(id: id)
-//        let film = presenter?.filmDescription
-//        return film
-//    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -103,7 +97,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         newViewController.myTableView.reloadData()
     }
     
-    // createCustomView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var genre = presenter?.filmsCollection?[section].title
         var view = CustomView(frame: CGRect(x: 0, y: 0, width: 300, height: 44), labelText: genre ?? "")

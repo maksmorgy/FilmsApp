@@ -26,6 +26,15 @@ class ListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let myDel = UIContextualAction(style: .normal, title: "Favourite") { (_, _, complitionHand) in
+            let filmTitle = self.data.films[indexPath.row].title
+            let filmImage = self.data.films[indexPath.row].imageURL
+        }
+        myDel.image = UIImage(systemName: "star")
+        return UISwipeActionsConfiguration(actions:[myDel])
+    }
+    
     private func createTableView() {
         myTableView = UITableView(frame: view.bounds, style: .plain)
         view.addSubview(myTableView)
@@ -44,12 +53,13 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         return data.films.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cell, for: indexPath)
-        
+
         if let customCell = cell as? MovieListCell {
         let text = data.films[indexPath.row].title
-            
+
             if let url: URL? = data.films[indexPath.row].imageURL {
             DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url!) {
@@ -67,9 +77,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         myTableView.deselectRow(at: indexPath, animated: true )
-        //let cell =  tableView.cellForRow(at: indexPath)
         let filmId = data.films[indexPath.row].filmId
         let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
         let endpoints = DefaultMoviesEnpdoints()
