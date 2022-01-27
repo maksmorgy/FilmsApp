@@ -19,8 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let endpoints = DefaultMoviesEnpdoints()
         window?.windowScene = windowScene
         let mainVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
+        let tabBarVC = TabBarController()
         let navVC = UINavigationController(rootViewController: mainVC)
-        window?.rootViewController = navVC
+        window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
     }
 
