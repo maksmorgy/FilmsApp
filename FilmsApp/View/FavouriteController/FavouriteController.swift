@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import CoreData
-import SwipeCellKit
 
 class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
