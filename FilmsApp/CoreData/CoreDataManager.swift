@@ -32,4 +32,10 @@ class CoreDataManager {
             }
         }
     }
+    
+    func delete(film: FilmData) {
+        let context = persistentContainer.viewContext
+        context.delete(film)
+        saveContext()
+    }
 }

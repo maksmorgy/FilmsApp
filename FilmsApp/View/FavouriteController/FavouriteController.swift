@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import CoreData
+import SwipeCellKit
 
 class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,7 +21,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         favouriteTableView.dataSource = self
         createTableView()
         loadFilms()
-      }
+    }
     
     func loadFilms() {
         let request : NSFetchRequest<FilmData> = FilmData.fetchRequest()
@@ -38,8 +39,22 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
             self.loadFilms()
             self.favouriteTableView.reloadData()
         }
-        }
-
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
+        let deleteAction = UIContextualAction(style: .destructive, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            success(true)
+            let film = self.films.remove(at: indexPath.row)
+            CoreDataManager.instance.delete(film: film)
+            self.favouriteTableView.deleteRows(at: [indexPath], with: .left)
+        })
+        //deleteAction.image = UIImage(systemName: "delete-icon")
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    
     private func createTableView() {
         favouriteTableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(favouriteTableView)
