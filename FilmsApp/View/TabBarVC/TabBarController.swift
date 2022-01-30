@@ -8,7 +8,7 @@ class TabBarController: UITabBarController {
         let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
         let endpoints = DefaultMoviesEnpdoints()
         let homeVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
-        let favouriteVC = FavouriteController()
+        let favouriteVC = FavouriteController(presenter: FavouritePresenter())
         
         homeVC.title = "Home"
         favouriteVC.title = "Favourite"

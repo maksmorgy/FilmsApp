@@ -14,28 +14,30 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     let context = CoreDataManager.instance.persistentContainer.viewContext
     let cell = "favouriteCell"
     
+    var presenter: FavouritePresenterProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         favouriteTableView.delegate = self
         favouriteTableView.dataSource = self
         createTableView()
-        loadFilms()
+        presenter?.loadFilms()
     }
     
-    func loadFilms() {
-        let request : NSFetchRequest<Film_Data> = Film_Data.fetchRequest()
+    init(presenter: FavouritePresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+        self.presenter?.delegate = self
         
-        do{
-            films = try context.fetch(request)
-        } catch {
-            print("Error loading categories \(error)")
-        }
-        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         DispatchQueue.main.async {
-            self.loadFilms()
+            self.presenter?.loadFilms()
             self.favouriteTableView.reloadData()
         }
     }
@@ -45,7 +47,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         let deleteAction = UIContextualAction(style: .destructive, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             success(true)
             let film = self.films.remove(at: indexPath.row)
-            CoreDataManager.instance.delete(film: film)
+            self.presenter?.deleteFilm(data: film)
             self.favouriteTableView.deleteRows(at: [indexPath], with: .left)
         })
         
@@ -81,7 +83,13 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-    
-    
 }
+
+extension FavouriteController: FavouritePresenterDelegate {
+    func updataData(data: [Film_Data]) {
+        self.films = data
+    }
+}
+
+
 
