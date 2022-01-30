@@ -27,7 +27,6 @@ public class FavouritePresenter: FavouritePresenterProtocol {
         } catch {
             print("Error loading categories \(error)")
         }
-        
     }
     
     func deleteFilm(data: Film_Data) {

@@ -54,7 +54,6 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    
     private func createTableView() {
         favouriteTableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(favouriteTableView)

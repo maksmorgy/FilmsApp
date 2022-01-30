@@ -38,8 +38,6 @@ class ListViewController: UIViewController {
             CoreDataManager.instance.saveContext()
             complitionHand(true)
         }
-        
-        
         myDel.image = UIImage(systemName: "star")
         return UISwipeActionsConfiguration(actions:[myDel])
     }
@@ -107,6 +105,4 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-    
-    
 }
