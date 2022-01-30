@@ -8,7 +8,7 @@ class CoreDataManager {
     
     lazy var persistentContainer: NSPersistentContainer = {
 
-        let container = NSPersistentContainer(name: "FilmsApp")
+        let container = NSPersistentContainer(name: "Film_Data")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
 
@@ -33,9 +33,10 @@ class CoreDataManager {
         }
     }
     
-    func delete(film: FilmData) {
+    func delete(film: Film_Data) {
         let context = persistentContainer.viewContext
         context.delete(film)
         saveContext()
     }
 }
+

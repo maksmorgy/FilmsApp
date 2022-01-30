@@ -31,7 +31,7 @@ class FavouriteCell: UITableViewCell {
         favouriteLabel.anchor(top: topAnchor, left: favouriteImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 250, height: 0, enableInsets: false)
     }
     
-    func updateAppearanceFor (content: FilmData?) {
+    func updateAppearanceFor (content: Film_Data?) {
         DispatchQueue.main.async {
             self.displayContent(content)
         }
@@ -43,20 +43,19 @@ class FavouriteCell: UITableViewCell {
 
     }
     
-    func displayContent(_ content: FilmData?) {
+    func displayContent(_ content: Film_Data?) {
         DispatchQueue.main.async {
-            self.createLoadingIndicator()
-            self.loadingIndicator.startAnimating()
-            self.favouriteLabel.text = ""
-            self.favouriteImage.image = .none
-        
-        if let data = try? Data(contentsOf: (content?.filmImage)! ) {
-                let image = UIImage(data: data)
-                self.favouriteImage.image = image
+            if let image = UIImage(data: (content?.filmImage)!){
                 self.favouriteLabel.text = content?.filmTitle
+                self.favouriteImage.image = image
                 self.createMovie()
                 self.loadingIndicator.stopAnimating()
-        }
+            } else {
+                self.createLoadingIndicator()
+                self.loadingIndicator.startAnimating()
+                self.favouriteLabel.text = ""
+                self.favouriteImage.image = .none
+            }
         }
     }
     

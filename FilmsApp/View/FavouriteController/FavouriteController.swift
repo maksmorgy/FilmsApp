@@ -10,7 +10,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         return table
     }()
     
-    var films = [FilmData]()
+    var films = [Film_Data]()
     let context = CoreDataManager.instance.persistentContainer.viewContext
     let cell = "favouriteCell"
     
@@ -23,7 +23,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func loadFilms() {
-        let request : NSFetchRequest<FilmData> = FilmData.fetchRequest()
+        let request : NSFetchRequest<Film_Data> = Film_Data.fetchRequest()
         
         do{
             films = try context.fetch(request)
@@ -48,7 +48,6 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
             CoreDataManager.instance.delete(film: film)
             self.favouriteTableView.deleteRows(at: [indexPath], with: .left)
         })
-        //deleteAction.image = UIImage(systemName: "delete-icon")
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
