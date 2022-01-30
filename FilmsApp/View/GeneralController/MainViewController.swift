@@ -86,10 +86,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if let customCell = cell as? MoviesCollectionCell {
-            let images: [URL] = presenter?.filmsCollection?[indexPath.section].films.map({ film in
+            DispatchQueue.main.async {
+                let images: [URL] = self.presenter?.filmsCollection?[indexPath.section].films.map({ film in
                 let image = film.imageURL
                 return image! }) ?? []
             customCell.setImages(images)
+            }
             return customCell
         }
         return cell

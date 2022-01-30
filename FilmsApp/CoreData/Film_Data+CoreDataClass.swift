@@ -11,5 +11,4 @@ import CoreData
 
 
 public class Film_Data: NSManagedObject {
-
 }

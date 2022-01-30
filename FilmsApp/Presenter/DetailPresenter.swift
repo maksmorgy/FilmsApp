@@ -30,7 +30,7 @@ public class DetailPresenter: DetailPresenterProtocol {
         dataTransferService.request(with: endpoints.movie(with: id)) { [weak self] result in
             switch result {
             case .success(let movieResponse):
-                let movie = DetailFilm(id: movieResponse.id!, originalTitle: movieResponse.title!, genres: movieResponse.genres!, countries: movieResponse.countries!, rating: movieResponse.imDbRating!, image: movieResponse.image!)
+                let movie = DetailFilm(id: movieResponse.id ?? "", originalTitle: movieResponse.title ?? "", genres: movieResponse.genres ?? "", countries: movieResponse.countries ?? "", rating: movieResponse.imDbRating ?? "", image: movieResponse.image ?? "")
                 self?.filmDescription = movie
                 self?.delegate?.updateData(data: self?.filmDescription)
                 

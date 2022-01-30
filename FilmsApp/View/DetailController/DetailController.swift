@@ -108,9 +108,7 @@ extension DetailController: DetailPresenterDelegate {
             
             let url = URL(string: data!.image)
             if let data = try? Data(contentsOf: url!), let image = UIImage(data: data) {
-                DispatchQueue.main.async {
                     self.imageView.image = image
-                }
             }
         }
         

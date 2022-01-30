@@ -5,7 +5,6 @@ class CoreDataManager {
     static let instance = CoreDataManager()
     
     // MARK: - Core Data stack
-    
     lazy var persistentContainer: NSPersistentContainer = {
 
         let container = NSPersistentContainer(name: "Film_Data")
@@ -22,6 +21,7 @@ class CoreDataManager {
     
     func saveContext () {
         let context = persistentContainer.viewContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         if context.hasChanges {
             do {
                 try context.save()

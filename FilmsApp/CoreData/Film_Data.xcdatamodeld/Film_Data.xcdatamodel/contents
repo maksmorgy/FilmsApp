@@ -3,6 +3,11 @@
     <entity name="Film_Data" representedClassName=".Film_Data" syncable="YES">
         <attribute name="filmImage" optional="YES" attributeType="Binary"/>
         <attribute name="filmTitle" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="filmTitle"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
         <element name="Film_Data" positionX="-63" positionY="-18" width="128" height="59"/>

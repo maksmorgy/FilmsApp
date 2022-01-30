@@ -29,14 +29,12 @@ class ListViewController: UIViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let myDel = UIContextualAction(style: .normal, title: "Favourite") { (_, _, complitionHand) in
-            let film = Film_Data(context: self.context)
-            if let data = try? Data(contentsOf: (self.data.films[indexPath.row].imageURL)! ) {
-                film.filmImage = data
-                     
-            }
             
+            let film = Film_Data(context: self.context)
+            if let data = try? Data(contentsOf: (self.data.films[indexPath.row].imageURL)!) {
+                film.filmImage = data
+            }
             film.filmTitle = self.data.films[indexPath.row].title
-            //film.filmImage = self.data.films[indexPath.row].imageURL
             CoreDataManager.instance.saveContext()
             complitionHand(true)
         }
@@ -73,7 +71,9 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cell, for: indexPath)
         
         if let customCell = cell as? MovieListCell {
-            customCell.updateAppearanceFor(content: data.films[indexPath.row], image: .none)
+            DispatchQueue.main.async {
+                customCell.updateAppearanceFor(content: self.data.films[indexPath.row], image: .none)
+            }
             return customCell
         }
         return cell
@@ -83,7 +83,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = cell as? MovieListCell else { return }
         
         if let url: URL? = data.films[indexPath.row].imageURL {
-            DispatchQueue.global().async { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 if let data = try? Data(contentsOf: url!) {
                     if let image = UIImage(data: data) {
                         DispatchQueue.main.async {
