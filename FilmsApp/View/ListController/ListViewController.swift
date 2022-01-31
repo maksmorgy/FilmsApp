@@ -29,14 +29,18 @@ class ListViewController: UIViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let myDel = UIContextualAction(style: .normal, title: "Favourite") { (_, _, complitionHand) in
-            
+            DispatchQueue.global().async {
             let film = Film_Data(context: self.context)
             if let data = try? Data(contentsOf: (self.data.films[indexPath.row].imageURL)!) {
                 film.filmImage = data
             }
             film.filmTitle = self.data.films[indexPath.row].title
             CoreDataManager.instance.saveContext()
-            complitionHand(true)
+                DispatchQueue.main.async {
+                    complitionHand(true)
+                }
+            
+            }
         }
         myDel.image = UIImage(systemName: "star")
         return UISwipeActionsConfiguration(actions:[myDel])
