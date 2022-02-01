@@ -50,7 +50,7 @@ public class SearchPresenter: SearchPresenterProtocol {
     }
     
     func saveFilms(data: [Film]) {
-        
+        searchFilms?.removeAll()
         for i in 0...data.count - 1 {
             let title = data[i].title
             

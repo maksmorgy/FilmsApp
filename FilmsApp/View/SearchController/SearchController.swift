@@ -8,7 +8,7 @@ class SearchViewController: UIViewController {
         return table
     }()
     var presenter: SearchPresenterProtocol?
-    
+    var timer = Timer()
     let searchController = UISearchController(searchResultsController: nil)
     var isSearchBarEmpty: Bool {
       return searchController.searchBar.text?.isEmpty ?? true
@@ -23,8 +23,16 @@ class SearchViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Film"
         navigationItem.searchController = searchController
-        definesPresentationContext = false
-        self.searchController.searchBar.delegate = self
+        definesPresentationContext = false//
+        //self.extendedLayoutIncludesOpaqueBars = true
+        //self.searchController.hidesNavigationBarDuringPresentation = false
+        //self.searchController.isActive = true
+        //searchController.hidesNavigationBarDuringPresentation = false
+        //tableView.tableHeaderView = searchController.searchBar
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//              self.searchController.searchBar.becomeFirstResponder()
+//          }
+
         
         createTableView()
         searchTableView.delegate = self
@@ -76,31 +84,19 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(SearchViewController.reload), object: nil)
+        self.perform(#selector(SearchViewController.reload), with: nil, afterDelay: 1)
+        
+        }
+    @objc func reload() {
         guard let text = searchController.searchBar.text else { return }
         presenter?.searchFilms(title: text)
+}
         }
-    }
-
-
 extension SearchViewController: SearchPresenterDelegate { 
     func updataData() {
         DispatchQueue.main.async {
         self.searchTableView.reloadData()
         }
-    }
-}
-
-extension SearchViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
-        perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 2)
-    }
-
-    @objc func reload(_ searchBar: UISearchBar) {
-        guard let query = searchBar.text, query.trimmingCharacters(in: .whitespaces) != "" else {
-            print("nothing to search")
-            return
-        }
-        print(query)
     }
 }
