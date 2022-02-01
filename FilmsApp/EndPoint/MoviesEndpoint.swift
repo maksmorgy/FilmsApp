@@ -4,11 +4,14 @@ public protocol MoviesEnpdoints {
     func topMovies() -> Endpoint<MoviesResponse>
     func movies(with genre: String) -> Endpoint<FilmsCategoryResponse>
     func movie(with filmId: String) -> Endpoint<SummaryFilmResponse>
+    func search(with filmTitle: String) -> Endpoint<FilmsCategoryResponse>
 }
 
 public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
    //private let apiKey = "k_1aoi0vnf"
-   private let apiKey = "k_44hm08xm"
+//    private let apiKey = "k_44hm08xm"
+    private let apiKey = "k_5bqobx4j"
+    //private let apiKey = ""
 
     
     public func topMovies() -> Endpoint<MoviesResponse> {
@@ -32,6 +35,13 @@ public final class DefaultMoviesEnpdoints: MoviesEnpdoints {
             path: "/API/Title/\(apiKey)/\(filmId)",
             method: .get
         )
+    }
+    
+    public func search(with filmTitle: String) -> Endpoint<FilmsCategoryResponse> {
+        return .init(
+            path: "/API/SearchTitle/\(apiKey)/\(filmTitle)",
+            method: .get
+            )
     }
 }
 

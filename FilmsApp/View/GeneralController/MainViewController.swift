@@ -36,7 +36,11 @@ class MainViewController: UIViewController {
     }()
     
     
-    let searchController = UISearchController(searchResultsController: nil)
+//    let searchController = UISearchController(searchResultsController: nil)
+//    var isSearchBarEmpty: Bool {
+//      return searchController.searchBar.text?.isEmpty ?? true
+//    }
+    
     var presenter: MainViewPresenterProtocol?
     var customView = UIView()
     
@@ -46,11 +50,11 @@ class MainViewController: UIViewController {
         navigationItem.title = "Films"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Film"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+//        searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search Film"
+//        navigationItem.searchController = searchController
+        //definesPresentationContext = true
     }
     
     init(presenter: MainViewPresenterProtocol) {
@@ -101,9 +105,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
         guard let section = sender?.view?.tag, let film = presenter?.filmsCollection?[section] else { return }
-        let newViewController = ListViewController(data: film)
+//        let newViewController = ListViewController(data: film)
+//        navigationController?.pushViewController(newViewController, animated: true)
+//        newViewController.myTableView.reloadData()
+        let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
+        let endpoints = DefaultMoviesEnpdoints()
+        let newViewController = SearchViewController(presenter: SearchPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
         navigationController?.pushViewController(newViewController, animated: true)
-        newViewController.myTableView.reloadData()
+        //newViewController.myTableView.reloadData()
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -140,9 +150,8 @@ extension MainViewController: MainPresenterDelegate {
     }
 }
 
-extension MainViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-    }
-    
-    
-}
+//extension MainViewController: UISearchResultsUpdating {
+//    func updateSearchResults(for searchController: UISearchController) {
+//        
+//    }
+//}

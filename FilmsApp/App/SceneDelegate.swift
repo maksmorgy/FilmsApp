@@ -18,7 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
         let endpoints = DefaultMoviesEnpdoints()
         window?.windowScene = windowScene
-        let mainVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
+        let mainVC = SearchViewController(presenter: SearchPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
+//        let mainVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
         let navVC = UINavigationController(rootViewController: mainVC)
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()

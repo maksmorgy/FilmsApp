@@ -19,9 +19,12 @@ struct DetailFilm {
     let countries: String
     let rating: String
     let image: String
-    
 }
 
+struct SearchFilm {
+    let title: String
+    let image: UIImage
+}
 
 
 
