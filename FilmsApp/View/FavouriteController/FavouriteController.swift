@@ -10,7 +10,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         return table
     }()
     
-    var films = [Film_Data]()
+   // var films = [Film_Data]()
     let context = CoreDataManager.instance.persistentContainer.viewContext
     let cell = "favouriteCell"
     
@@ -46,8 +46,9 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         let deleteAction = UIContextualAction(style: .destructive, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             success(true)
-            let film = self.films.remove(at: indexPath.row)
-            self.presenter?.deleteFilm(data: film)
+            //let film = self.films.remove(at: indexPath.row)
+            let film = self.presenter?.films?.remove(at: indexPath.row)
+            self.presenter?.deleteFilm(data: film!)
             self.favouriteTableView.deleteRows(at: [indexPath], with: .left)
         })
         
@@ -66,14 +67,14 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return films.count
+        return presenter?.films?.count ?? 0//films.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: cell, for: indexPath)
         
         if  let customCell = cell as? FavouriteCell {
-            customCell.updateAppearanceFor(content: films[indexPath.row])
+            customCell.updateAppearanceFor(content: presenter?.films?[indexPath.row])
             return customCell
         }
         return cell
@@ -86,7 +87,8 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
 
 extension FavouriteController: FavouritePresenterDelegate {
     func updataData(data: [Film_Data]) {
-        self.films = data
+        //self.films = data
+        self.favouriteTableView.reloadData()
     }
 }
 
