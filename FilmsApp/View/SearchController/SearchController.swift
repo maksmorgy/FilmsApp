@@ -17,21 +17,14 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Films"
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.searchController = searchController
         
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Film"
-        navigationItem.searchController = searchController
-        definesPresentationContext = false//
-        //self.extendedLayoutIncludesOpaqueBars = true
-        //self.searchController.hidesNavigationBarDuringPresentation = false
-        //self.searchController.isActive = true
-        //searchController.hidesNavigationBarDuringPresentation = false
-        //tableView.tableHeaderView = searchController.searchBar
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//              self.searchController.searchBar.becomeFirstResponder()
-//          }
+        definesPresentationContext = false
 
         
         createTableView()
