@@ -26,7 +26,6 @@ class SearchViewController: UIViewController {
         searchController.searchBar.placeholder = "Search Film"
         definesPresentationContext = false
 
-        
         createTableView()
         searchTableView.delegate = self
         searchTableView.dataSource = self

@@ -53,7 +53,7 @@ public class SearchPresenter: SearchPresenterProtocol {
         searchFilms?.removeAll()
         for i in 0...data.count - 1 {
             let title = data[i].title
-            DispatchQueue.global().async {
+            DispatchQueue.main.async {
                 if let url: URL? = data[i].imageURL {
                     if let data = try? Data(contentsOf: url!) {
                         if let image = UIImage(data: data) {
@@ -61,8 +61,8 @@ public class SearchPresenter: SearchPresenterProtocol {
                         }
                     }
                 }
-            }
-           
+
         }
+}
 }
 }
