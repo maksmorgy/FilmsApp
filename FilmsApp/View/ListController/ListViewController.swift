@@ -79,7 +79,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let customCell = cell as? MovieListCell {
             DispatchQueue.main.async {
-                customCell.updateAppearanceFor(title: self.presenter.titleAtindex(index: indexPath.row), image: .none)//self.presenter.imageAtindex(index: indexPath.row))
+                customCell.updateAppearanceFor(title: self.presenter.titleAtindex(index: indexPath.row), image: self.presenter.imageAtindex(index: indexPath.row))
                 //customCell.updateAppearanceFor(content: self.data.films[indexPath.row], image: .none)
             }
             return customCell

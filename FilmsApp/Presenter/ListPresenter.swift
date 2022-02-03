@@ -17,20 +17,13 @@ protocol ListPresenterProtocol {
 
 public class ListPresenter: ListPresenterProtocol {
     var delegate: ListPresenterDelegate?
-    private var films: [Film]?
-    private var image: UIImage?
+    var films: [Film]?
+    var images: [UIImage]?
     
     func loadData(data: FilmsCollection) {
         self.films = data.films
-//        guard let url: URL? = data.films[indexPath.row].imageURL else {return}
-//        DispatchQueue.main.async { [weak self] in
-//            if let data = try? Data(contentsOf: url as! URL) , let image = UIImage(data: data)  {
-//                DispatchQueue.main.async {
-//                    cell.updateAppearanceFor(content: self?.data.films[indexPath.row], image: image)
-//                }
-//            }
-//        }
- }
+        delegate?.updateData()
+    }
     
     func titleAtindex(index: Int) -> String? {
         let title = films?[index].title
@@ -38,15 +31,14 @@ public class ListPresenter: ListPresenterProtocol {
     }
     
     func imageAtindex(index: Int) -> UIImage? {
+        var image = UIImage()
         if let url: URL? = films?[index].imageURL {
-            
-                if let data = try? Data(contentsOf: url as! URL) {
-                    self.image = UIImage(data: data)
-                    print(self.image)
-                }
-            
+            if let data = try? Data(contentsOf: url as! URL) {
+                image = UIImage(data: data)!
+            }
         }
-        return self.image
+        return image
+        delegate?.updateData()
     }
     
     func idAtindex() {
