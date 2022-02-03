@@ -99,7 +99,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
         guard let section = sender?.view?.tag, let film = presenter.filmsCollection?[section] else { return }
-        let newViewController = ListViewController(data: film)
+        let newViewController = ListViewController(data: film, presenter: ListPresenter())
         navigationController?.pushViewController(newViewController, animated: true)
     }
     

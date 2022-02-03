@@ -11,6 +11,7 @@ class ListViewController: UIViewController {
     var data: FilmsCollection
     let cellReuseIndentifier = "cell"
     let context = CoreDataManager.instance.persistentContainer.viewContext
+    var presenter: ListPresenterProtocol
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,9 +19,12 @@ class ListViewController: UIViewController {
         createTableView()
     }
     
-    init(data: FilmsCollection ) {
+    init(data: FilmsCollection, presenter: ListPresenterProtocol ) {
+        self.presenter = presenter
         self.data = data
         super.init(nibName: nil, bundle: nil)
+        self.presenter.delegate = self
+        self.presenter.loadData(data: data)
     }
     
     required init?(coder: NSCoder) {
@@ -75,7 +79,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let customCell = cell as? MovieListCell {
             DispatchQueue.main.async {
-                customCell.updateAppearanceFor(content: self.data.films[indexPath.row], image: .none)
+                customCell.updateAppearanceFor(content: <#T##Film?#>, image: <#T##UIImage?#>)
+                //customCell.updateAppearanceFor(content: self.data.films[indexPath.row], image: .none)
             }
             return customCell
         }
@@ -106,5 +111,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+}
+
+extension ListViewController: ListPresenterDelegate {
+    func updateData() {
+        self.listTableView.reloadData()
     }
 }

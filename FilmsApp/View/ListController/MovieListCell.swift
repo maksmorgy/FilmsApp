@@ -31,6 +31,7 @@ class MovieListCell: UITableViewCell {
     }
     
     func createLoadingIndicator() {
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         addSubview(loadingIndicator)
         NSLayoutConstraint.activate([
             loadingIndicator.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
@@ -53,8 +54,7 @@ class MovieListCell: UITableViewCell {
             movieListLabel.text = film.title
             movieListImage.image = image
             createMovie()
-            createLoadingIndicator()
-            loadingIndicator.startAnimating()
+            loadingIndicator.stopAnimating()
         } else {
             createLoadingIndicator()
             loadingIndicator.startAnimating()
