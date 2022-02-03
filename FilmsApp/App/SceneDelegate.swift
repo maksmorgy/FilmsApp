@@ -19,10 +19,59 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let endpoints = DefaultMoviesEnpdoints()
         window?.windowScene = windowScene
         let mainVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
-        let tabBarVC = TabBarController()
+        let tabBarVC = UITabBarController()
+        
+        let homeVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
+        let favouriteVC = FavouriteController(presenter: FavouritePresenter())
+        
+        let homeTabBarItem = UITabBarItem()
+        let favouriteTabBarItem = UITabBarItem()
+        homeTabBarItem.image = UIImage(systemName: "house")
+        favouriteTabBarItem.image = UIImage(systemName: "star")
+        homeTabBarItem.title = "Home"
+        favouriteTabBarItem.title = "Favourite"
+        tabBarVC.tabBar.tintColor = .black
+    
+        homeVC.tabBarItem = homeTabBarItem
+        favouriteVC.tabBarItem = favouriteTabBarItem
+        
+        let firstVC = UINavigationController(rootViewController: homeVC)
+        let secondVC = UINavigationController(rootViewController: favouriteVC)
+        tabBarVC.setViewControllers([firstVC, secondVC], animated: false)
+        
         let navVC = UINavigationController(rootViewController: mainVC)
         window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
+        
+        
+        
+        
+//        func createTabBar() {
+//
+//            let homeVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
+//            let favouriteVC = FavouriteController(presenter: FavouritePresenter())
+//
+//            homeVC.title = "Home"
+//            favouriteVC.title = "Favourite"
+//
+//            let homeTabBarItem = UITabBarItem()
+//            let favouriteTabBarItem = UITabBarItem()
+//            homeTabBarItem.image = UIImage(systemName: "house")
+//            favouriteTabBarItem.image = UIImage(systemName: "star")
+//
+//            homeVC.tabBarItem = homeTabBarItem
+//            favouriteVC.tabBarItem = favouriteTabBarItem
+//
+//
+//            let firstVC = UINavigationController(rootViewController: homeVC)
+//            let secondVC = UINavigationController(rootViewController: favouriteVC)
+//
+//            self.setViewControllers([firstVC, secondVC], animated: false)
+//
+//
+//
+//
+//        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -53,7 +102,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        //(UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 

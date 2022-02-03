@@ -3,7 +3,7 @@ import UIKit
 
 class FavouriteCell: UITableViewCell {
     
-    var favouriteLabel: UILabel = {
+    let favouriteLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -11,13 +11,13 @@ class FavouriteCell: UITableViewCell {
         return label
     }()
     
-    var favouriteImage: UIImageView = {
+    let  favouriteImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         return image
     }()
     
-    var loadingIndicator = UIActivityIndicatorView(style: .large)
+    let loadingIndicator = UIActivityIndicatorView(style: .large)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,7 +31,7 @@ class FavouriteCell: UITableViewCell {
         favouriteLabel.anchor(top: topAnchor, left: favouriteImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 250, height: 0, enableInsets: false)
     }
     
-    func updateAppearanceFor (content: Film_Data?) {
+    func updateAppearanceFor (content: MOFilm?) {
         DispatchQueue.main.async {
             self.displayContent(content)
         }
@@ -39,13 +39,18 @@ class FavouriteCell: UITableViewCell {
     
     func createLoadingIndicator() {
         addSubview(loadingIndicator)
-        loadingIndicator.center = CGPoint(x: self.contentView.bounds.width / 2, y: self.contentView.bounds.height / 2)
+                NSLayoutConstraint.activate([
+                    loadingIndicator.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+                    loadingIndicator.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+                ])
+      
+        //loadingIndicator.center = CGPoint(x: self.contentView.bounds.width / 2, y: self.contentView.bounds.height / 2)
 
     }
     
-    func displayContent(_ content: Film_Data?) {
+    func displayContent(_ content: MOFilm?) {
         DispatchQueue.main.async {
-            if let image = UIImage(data: (content?.filmImage)!){
+            if let image = UIImage(data: (content?.filmImage) as! Data){
                 self.favouriteLabel.text = content?.filmTitle
                 self.favouriteImage.image = image
                 self.createMovie()

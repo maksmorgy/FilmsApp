@@ -32,8 +32,12 @@ class MovieListCell: UITableViewCell {
     
     func createLoadingIndicator() {
         addSubview(loadingIndicator)
-        loadingIndicator.center = CGPoint(x: self.contentView.bounds.width / 2, y: self.contentView.bounds.height / 2)
-
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+        ])
+        
+        
     }
     
     func updateAppearanceFor (content: Film?, image: UIImage?) {
@@ -44,19 +48,18 @@ class MovieListCell: UITableViewCell {
     
     func displayContent(_ content: Film?, _ image: UIImage?) {
         
-        if  let image: UIImage = image {
+        guard let image = image else {return}
         if let film = content {
             movieListLabel.text = film.title
             movieListImage.image = image
             createMovie()
-            loadingIndicator.stopAnimating()
-        }
+            createLoadingIndicator()
+            loadingIndicator.startAnimating()
         } else {
             createLoadingIndicator()
             loadingIndicator.startAnimating()
             movieListImage.image = .none
             movieListLabel.text = ""
-            
         }
     }
     

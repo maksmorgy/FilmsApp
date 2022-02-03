@@ -32,10 +32,12 @@ class MainViewController: UIViewController {
     
     var moviesCollectionsTableView: UITableView = {
         let movieCollection = UITableView()
+        movieCollection.translatesAutoresizingMaskIntoConstraints = false
         return movieCollection
     }()
-    var presenter: MainViewPresenterProtocol?
+    var presenter: MainViewPresenterProtocol
     var customView = UIView()
+    let cellReuseIdentifier = "mainCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,7 @@ class MainViewController: UIViewController {
     init(presenter: MainViewPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        self.presenter?.delegate = self        
+        self.presenter.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -55,28 +57,28 @@ class MainViewController: UIViewController {
     }
     
     private func createTableView() {
-        moviesCollectionsTableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(moviesCollectionsTableView)
-        moviesCollectionsTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        moviesCollectionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        moviesCollectionsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        moviesCollectionsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
+        NSLayoutConstraint.activate([
+            moviesCollectionsTableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+            moviesCollectionsTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            moviesCollectionsTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+            moviesCollectionsTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+            ])
         createMoviesCollectionView()
     }
     
     func createMoviesCollectionView() {
-        self.moviesCollectionsTableView.register(MoviesCollectionCell.self, forCellReuseIdentifier: "cell")
-        self.moviesCollectionsTableView.delegate = self
-        self.moviesCollectionsTableView.dataSource = self
-        self.moviesCollectionsTableView.backgroundColor = .white
-        self.moviesCollectionsTableView.isUserInteractionEnabled = true
+        moviesCollectionsTableView.register(MoviesCollectionCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        moviesCollectionsTableView.delegate = self
+        moviesCollectionsTableView.dataSource = self
+        moviesCollectionsTableView.backgroundColor = .white
+        moviesCollectionsTableView.isUserInteractionEnabled = true
     }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter?.filmsCollection?.count ?? 0
+        return presenter.filmsCollection?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,13 +86,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         if let customCell = cell as? MoviesCollectionCell {
             DispatchQueue.main.async {
-                let images: [URL] = self.presenter?.filmsCollection?[indexPath.section].films.map({ film in
-                let image = film.imageURL
-                return image! }) ?? []
-            customCell.setImages(images)
+                let images = self.presenter.filmsCollection?[indexPath.section].films.compactMap{ $0.imageURL as? URL}
+                customCell.setImages(images!)
             }
             return customCell
         }
@@ -98,14 +98,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
-        guard let section = sender?.view?.tag, let film = presenter?.filmsCollection?[section] else { return }
+        guard let section = sender?.view?.tag, let film = presenter.filmsCollection?[section] else { return }
         let newViewController = ListViewController(data: film)
         navigationController?.pushViewController(newViewController, animated: true)
-        newViewController.listTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var genre = presenter?.filmsCollection?[section].title
+        var genre = presenter.filmsCollection?[section].title
         var view = CustomView(frame: CGRect(x: 0, y: 0, width: 300, height: 44), labelText: genre ?? "")
         
         let tapGestureRecognizer = UITapGestureRecognizer(

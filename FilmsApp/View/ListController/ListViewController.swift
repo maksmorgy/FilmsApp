@@ -9,7 +9,7 @@ class ListViewController: UIViewController {
     }()
     
     var data: FilmsCollection
-    let cell = "cell"
+    let cellReuseIndentifier = "cell"
     let context = CoreDataManager.instance.persistentContainer.viewContext
     
     override func viewDidLoad() {
@@ -28,37 +28,38 @@ class ListViewController: UIViewController {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let myDel = UIContextualAction(style: .normal, title: "Favourite") { (_, _, complitionHand) in
+        let deleteAction = UIContextualAction(style: .normal, title: "Favourite") { (_, _, completionHandler) in
             DispatchQueue.global().async {
-            let film = Film_Data(context: self.context)
-            if let data = try? Data(contentsOf: (self.data.films[indexPath.row].imageURL)!) {
-                film.filmImage = data
-            }
-            film.filmTitle = self.data.films[indexPath.row].title
-            CoreDataManager.instance.saveContext()
-                DispatchQueue.main.async {
-                    complitionHand(true)
+                let film = MOFilm(context: self.context)
+                if let data = try? Data(contentsOf: (self.data.films[indexPath.row].imageURL) as! URL) {
+                    film.filmImage = data
                 }
-            
+                film.filmTitle = self.data.films[indexPath.row].title
+                //create Presenter
+                CoreDataManager.instance.saveContext()
+                DispatchQueue.main.async {
+                    completionHandler(true)
+                }
             }
         }
-        myDel.image = UIImage(systemName: "star")
-        return UISwipeActionsConfiguration(actions:[myDel])
+        deleteAction.image = UIImage(systemName: "star")
+        return UISwipeActionsConfiguration(actions:[deleteAction])
     }
     
     private func createTableView() {
         listTableView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(listTableView)
-        listTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
+        view.addSubview(listTableView)
+        NSLayoutConstraint.activate([
+            listTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         createListCell()
     }
     
     func createListCell() {
-        listTableView.register(MovieListCell.self, forCellReuseIdentifier: cell)
+        listTableView.register(MovieListCell.self, forCellReuseIdentifier: cellReuseIndentifier)
         listTableView.delegate = self
         listTableView.dataSource = self
     }
@@ -70,7 +71,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIndentifier, for: indexPath)
         
         if let customCell = cell as? MovieListCell {
             DispatchQueue.main.async {
@@ -84,14 +85,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? MovieListCell else { return }
         
-        if let url: URL? = data.films[indexPath.row].imageURL {
-            DispatchQueue.main.async { [weak self] in
-                if let data = try? Data(contentsOf: url!) {
-                    if let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            cell.updateAppearanceFor(content: self?.data.films[indexPath.row], image: image)
-                        }
-                    }
+        guard let url: URL? = data.films[indexPath.row].imageURL else {return}
+        DispatchQueue.main.async { [weak self] in
+            if let data = try? Data(contentsOf: url as! URL) , let image = UIImage(data: data)  {
+                DispatchQueue.main.async {
+                    cell.updateAppearanceFor(content: self?.data.films[indexPath.row], image: image)
                 }
             }
         }
@@ -104,7 +102,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         let endpoints = DefaultMoviesEnpdoints()
         let newViewController = DetailController(id: filmId, presenter: DetailPresenter(dataTransferService: dataTransferService, endpoints: endpoints, id: filmId))
         self.navigationController?.pushViewController(newViewController, animated: true)
-        }
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100

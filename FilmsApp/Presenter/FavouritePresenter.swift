@@ -2,24 +2,25 @@ import Foundation
 import CoreData
 
 protocol FavouritePresenterDelegate: AnyObject {
-    func updataData(data: [Film_Data])
+    func updataData(data: [MOFilm])
 }
 
 protocol FavouritePresenterProtocol: AnyObject {
-    var films: [Film_Data]? { get set }
     var delegate: FavouritePresenterDelegate? { get set }
     
     func loadFilms()
-    func deleteFilm(data: Film_Data)
+    func deleteFilm(data: MOFilm, index: Int)
+    func filmAtindex(index: Int) -> MOFilm?
+    func numbersOfFilms() -> Int
 }
 
 public class FavouritePresenter: FavouritePresenterProtocol {
-    var films: [Film_Data]?
+    private var films: [MOFilm]?
     weak var delegate: FavouritePresenterDelegate?
-    let context = CoreDataManager.instance.persistentContainer.viewContext
+    private let context = CoreDataManager.instance.persistentContainer.viewContext
     
     func loadFilms() {
-        let request : NSFetchRequest<Film_Data> = Film_Data.fetchRequest()
+        let request : NSFetchRequest<MOFilm> = MOFilm.fetchRequest()
         
         do{
             films = try context.fetch(request)
@@ -29,7 +30,17 @@ public class FavouritePresenter: FavouritePresenterProtocol {
         }
     }
     
-    func deleteFilm(data: Film_Data) {
+    func filmAtindex(index: Int) -> MOFilm? {
+        let film = films?[index]
+        return film
+    }
+    
+    func numbersOfFilms() -> Int {
+        return films?.count ?? 0
+    }
+    
+    func deleteFilm(data: MOFilm, index: Int) {
+        self.films?.remove(at: index)
         CoreDataManager.instance.delete(film: data)
     }
 }
