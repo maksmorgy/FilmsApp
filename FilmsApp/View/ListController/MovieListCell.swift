@@ -40,28 +40,41 @@ class MovieListCell: UITableViewCell {
         
         
     }
-    
-    func updateAppearanceFor (content: Film?, image: UIImage?) {
+    func updateAppearanceFor (title: String?, image: UIImage?) {
         DispatchQueue.main.async {
-            self.displayContent(content, image)
+            self.displayContent(title, image)
         }
     }
     
-    func displayContent(_ content: Film?, _ image: UIImage?) {
-        
-        guard let image = image else {return}
-        if let film = content {
-            movieListLabel.text = film.title
-            movieListImage.image = image
+    func displayContent(_ title: String?, _ image: UIImage?) {
+        if let title = title {
+            movieListLabel.text = title
+            //movieListImage.image = image
             createMovie()
-            loadingIndicator.stopAnimating()
-        } else {
-            createLoadingIndicator()
-            loadingIndicator.startAnimating()
-            movieListImage.image = .none
-            movieListLabel.text = ""
         }
     }
+    
+//    func updateAppearanceFor (content: Film?, image: UIImage?) {
+//        DispatchQueue.main.async {
+//            self.displayContent(content, image)
+//        }
+//    }
+//
+//    func displayContent(_ content: Film?, _ image: UIImage?) {
+//
+//        guard let image = image else {return}
+//        if let film = content {
+//            movieListLabel.text = film.title
+//            movieListImage.image = image
+//            createMovie()
+//            loadingIndicator.stopAnimating()
+//        } else {
+//            createLoadingIndicator()
+//            loadingIndicator.startAnimating()
+//            movieListImage.image = .none
+//            movieListLabel.text = ""
+//        }
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

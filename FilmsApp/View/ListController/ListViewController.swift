@@ -79,7 +79,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let customCell = cell as? MovieListCell {
             DispatchQueue.main.async {
-                customCell.updateAppearanceFor(content: <#T##Film?#>, image: <#T##UIImage?#>)
+                customCell.updateAppearanceFor(title: self.presenter.titleAtindex(index: indexPath.row), image: .none)//self.presenter.imageAtindex(index: indexPath.row))
                 //customCell.updateAppearanceFor(content: self.data.films[indexPath.row], image: .none)
             }
             return customCell
@@ -89,15 +89,17 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? MovieListCell else { return }
+            cell.updateAppearanceFor(title: self.presenter.titleAtindex(index: indexPath.row), image: self.presenter.imageAtindex(index: indexPath.row))
         
-        guard let url: URL? = data.films[indexPath.row].imageURL else {return}
-        DispatchQueue.main.async { [weak self] in
-            if let data = try? Data(contentsOf: url as! URL) , let image = UIImage(data: data)  {
-                DispatchQueue.main.async {
-                    cell.updateAppearanceFor(content: self?.data.films[indexPath.row], image: image)
-                }
-            }
-        }
+        
+//        guard let url: URL? = data.films[indexPath.row].imageURL else {return}
+//        DispatchQueue.main.async { [weak self] in
+//            if let data = try? Data(contentsOf: url as! URL) , let image = UIImage(data: data)  {
+//                DispatchQueue.main.async {
+//                    cell.updateAppearanceFor(content: self?.data.films[indexPath.row], image: image)
+//                }
+//            }
+//        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

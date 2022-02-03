@@ -18,6 +18,7 @@ protocol ListPresenterProtocol {
 public class ListPresenter: ListPresenterProtocol {
     var delegate: ListPresenterDelegate?
     private var films: [Film]?
+    private var image: UIImage?
     
     func loadData(data: FilmsCollection) {
         self.films = data.films
@@ -37,17 +38,15 @@ public class ListPresenter: ListPresenterProtocol {
     }
     
     func imageAtindex(index: Int) -> UIImage? {
-        var image: UIImage?
-        DispatchQueue.main.async {
-            guard let url: URL? = self.films?[index].imageURL else { return }
-       
-            guard let data = try? Data(contentsOf: url as! URL) else { return }
-                image = UIImage(data: data)
+        if let url: URL? = films?[index].imageURL {
             
-        
-       
-       }
-        return image
+                if let data = try? Data(contentsOf: url as! URL) {
+                    self.image = UIImage(data: data)
+                    print(self.image)
+                }
+            
+        }
+        return self.image
     }
     
     func idAtindex() {
