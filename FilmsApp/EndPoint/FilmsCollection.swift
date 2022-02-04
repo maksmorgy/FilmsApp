@@ -12,7 +12,7 @@ struct Film {
     let imageURL: URL?
 }
 
-struct DetailFilm {
+struct FilmDetails {
     let id: String
     let originalTitle: String
     let genres: String

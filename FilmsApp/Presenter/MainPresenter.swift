@@ -9,7 +9,7 @@ protocol MainViewPresenterProtocol: AnyObject {
     var filmsCollection: [FilmsCollection]? { get set }
     var filmsCollection2: [FilmsCollection]? { get set }
     var delegate: MainPresenterDelegate? { get set }
-    var filmDescription: DetailFilm? { get set }
+    var filmDescription: FilmDetails? { get set }
     
     func getId(id: String)
     func getData()
@@ -19,7 +19,7 @@ public class MainPresenter: MainViewPresenterProtocol {
   
     public var filmsCollection: [FilmsCollection]? = []
     public var filmsCollection2: [FilmsCollection]? = []
-    var filmDescription: DetailFilm?
+    var filmDescription: FilmDetails?
 
     public weak var delegate: MainPresenterDelegate?
     private let dataTransferService: DataTransferService
@@ -79,7 +79,7 @@ public class MainPresenter: MainViewPresenterProtocol {
         dataTransferService.request(with: endpoints.movie(with: id)) {  [weak self] result in
             switch result {
             case .success(let movieResponse):
-                let movie = DetailFilm(id: movieResponse.id!, originalTitle: movieResponse.title!, genres: movieResponse.genres!, countries: movieResponse.countries!, rating: movieResponse.imDbRating!, image: movieResponse.image!)
+                let movie = FilmDetails(id: movieResponse.id!, originalTitle: movieResponse.title!, genres: movieResponse.genres!, countries: movieResponse.countries!, rating: movieResponse.imDbRating!, image: movieResponse.image!)
                 self?.filmDescription = movie
                 
             case .failure(let error):

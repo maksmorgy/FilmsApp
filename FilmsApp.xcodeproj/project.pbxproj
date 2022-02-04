@@ -44,6 +44,7 @@
 		C1A1895E27AABA9A00D23D9B /* MOFilm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A1895C27AABA9A00D23D9B /* MOFilm+CoreDataClass.swift */; };
 		C1A1895F27AABA9A00D23D9B /* MOFilm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A1895D27AABA9A00D23D9B /* MOFilm+CoreDataProperties.swift */; };
 		C1A1896527AC211F00D23D9B /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A1896427AC211F00D23D9B /* ListPresenter.swift */; };
+		C1A1896727AD6FFF00D23D9B /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A1896627AD6FFF00D23D9B /* CustomView.swift */; };
 		C1B11F5B2767DA3C00168892 /* CollectionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F582767DA3C00168892 /* CollectionListCell.swift */; };
 		C1B11F5C2767DA3C00168892 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F592767DA3C00168892 /* MainViewController.swift */; };
 		C1B11F5D2767DA3C00168892 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B11F5A2767DA3C00168892 /* MainCell.swift */; };
@@ -93,6 +94,7 @@
 		C1A1895C27AABA9A00D23D9B /* MOFilm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOFilm+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C1A1895D27AABA9A00D23D9B /* MOFilm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOFilm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C1A1896427AC211F00D23D9B /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
+		C1A1896627AD6FFF00D23D9B /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		C1B11F562767D97B00168892 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		C1B11F582767DA3C00168892 /* CollectionListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionListCell.swift; sourceTree = "<group>"; };
 		C1B11F592767DA3C00168892 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				C1B11F592767DA3C00168892 /* MainViewController.swift */,
+				C1A1896627AD6FFF00D23D9B /* CustomView.swift */,
 				C1B11F5A2767DA3C00168892 /* MainCell.swift */,
 				C1B11F582767DA3C00168892 /* CollectionListCell.swift */,
 			);
@@ -415,6 +418,7 @@
 				C1A1892927A2F60200D23D9B /* CoreDataManager.swift in Sources */,
 				C1A1894227A6A88100D23D9B /* FavouritePresenter.swift in Sources */,
 				C1A1892327A2DD2B00D23D9B /* FavouriteController.swift in Sources */,
+				C1A1896727AD6FFF00D23D9B /* CustomView.swift in Sources */,
 				C1A1892F27A30AF600D23D9B /* FavouriteCell.swift in Sources */,
 				C1742F51276CDA2500C33ACD /* JSONDecoderExtensions.swift in Sources */,
 				C1113719275E74EA003E7DEA /* MainPresenter.swift in Sources */,

@@ -11,14 +11,17 @@ protocol ListPresenterProtocol {
     func loadData(data: FilmsCollection)
     func titleAtindex(index: Int) -> String?
     func imageAtindex(index: Int) -> UIImage?
-    func idAtindex()
+    func idAtindex(index: Int) -> String?
     func numberOffilms() -> Int
+    func saveFilms(title: String?, image: UIImage?)
 }
 
 public class ListPresenter: ListPresenterProtocol {
     var delegate: ListPresenterDelegate?
     var films: [Film]?
     var images: [UIImage]?
+    let context = CoreDataManager.instance.persistentContainer.viewContext
+
     
     func loadData(data: FilmsCollection) {
         self.films = data.films
@@ -40,12 +43,20 @@ public class ListPresenter: ListPresenterProtocol {
         return image
     }
     
-    func idAtindex() {
-        
+    func idAtindex(index: Int) -> String? {
+        return self.films?[index].filmId
+    }
+    
+    func saveFilms(title: String?, image: UIImage?) {
+        let moFilm = MOFilm(context: self.context)
+        moFilm.filmTitle = title
+        let data = image!.pngData()
+        moFilm.filmImage = data
+        CoreDataManager.instance.saveContext()
     }
     
     func numberOffilms() -> Int {
-        return 0
+        return films?.count ?? 0
     }
     
 }

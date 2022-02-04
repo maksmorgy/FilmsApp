@@ -97,7 +97,7 @@ class DetailController: UIViewController {
 }
 
 extension DetailController: DetailPresenterDelegate {
-    func updateData(data: DetailFilm?) {
+    func updateData(data: FilmDetails?) {
         DispatchQueue.main.async {
             self.updateFontSize()
             
