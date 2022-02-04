@@ -38,7 +38,6 @@ public class ListPresenter: ListPresenterProtocol {
             }
         }
         return image
-        delegate?.updateData()
     }
     
     func idAtindex() {

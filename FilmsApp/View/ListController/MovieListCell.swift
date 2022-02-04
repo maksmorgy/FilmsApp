@@ -49,7 +49,7 @@ class MovieListCell: UITableViewCell {
     func displayContent(_ title: String?, _ image: UIImage?) {
         if let title = title {
             movieListLabel.text = title
-            //movieListImage.image = image
+            movieListImage.image = image
             createMovie()
         }
     }
