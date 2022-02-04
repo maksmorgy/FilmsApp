@@ -35,12 +35,6 @@ class MainViewController: UIViewController {
         return movieCollection
     }()
     
-    
-//    let searchController = UISearchController(searchResultsController: nil)
-//    var isSearchBarEmpty: Bool {
-//      return searchController.searchBar.text?.isEmpty ?? true
-//    }
-    
     var presenter: MainViewPresenterProtocol?
     var customView = UIView()
     
@@ -48,13 +42,44 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         createTableView()
         navigationItem.title = "Films"
-        navigationController?.navigationBar.prefersLargeTitles = true
         
-//        searchController.searchResultsUpdater = self
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "Search Film"
-//        navigationItem.searchController = searchController
-        //definesPresentationContext = true
+//        let icon = UIImage(named: "magnifyingglass")
+//        let iconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 50, height: 50))
+//        let iconButton = UIButton(frame: iconSize)
+//        iconButton.setBackgroundImage(icon, for: .normal)
+//        let barButton = UIBarButtonItem(customView: iconButton)
+//        iconButton.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
+
+        
+        //let icon = UIImage(named: "magnifyingglass")
+//        let menuButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(searchTapped))
+//        menuButton.image = UIImage.init(systemName: "magnifyingglass")
+//        menuButton.imageInsets = UIEdgeInsets(top: 200, left: 20, bottom: 0, right: 0)
+//        self.navigationItem.rightBarButtonItem = menuButton
+        
+        
+        
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done,       target: self, action: #selector(searchTapped))
+        
+        //navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "magnifyingglass")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .systemBlue
+        button.imageView?.contentMode = .scaleAspectFit
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
+        button.tintColor = .black
+        let menuBarItem = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = menuBarItem
+        //navigationItem.rightBarButtonItem?.tintColor = .black
+    }
+    
+    var newViewController = SearchViewController(presenter: SearchPresenter(dataTransferService: DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com"))), endpoints: DefaultMoviesEnpdoints()))
+    
+    @objc func searchTapped() {
+        navigationController?.pushViewController(newViewController, animated: true)
     }
     
     init(presenter: MainViewPresenterProtocol) {
@@ -105,13 +130,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
         guard let section = sender?.view?.tag, let film = presenter?.filmsCollection?[section] else { return }
-//        let newViewController = ListViewController(data: film)
-//        navigationController?.pushViewController(newViewController, animated: true)
-//        newViewController.myTableView.reloadData()
-        let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
-        let endpoints = DefaultMoviesEnpdoints()
-        let newViewController = SearchViewController(presenter: SearchPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
+        let newViewController = ListViewController(data: film)
         navigationController?.pushViewController(newViewController, animated: true)
+        newViewController.myTableView.reloadData()
+        //let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
+       // let endpoints = DefaultMoviesEnpdoints()
+       // let newViewController = SearchViewController(presenter: SearchPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
+        //navigationController?.pushViewController(newViewController, animated: true)
         //newViewController.myTableView.reloadData()
         
     }

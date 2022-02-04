@@ -20,9 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         let mainVC = MainViewController(presenter: MainPresenter(dataTransferService: dataTransferService, endpoints: endpoints))
         let navVC = UINavigationController(rootViewController: mainVC)
+       
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()
     }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
@@ -50,9 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 
