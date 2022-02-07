@@ -7,10 +7,12 @@ public protocol MainPresenterDelegate: AnyObject {
 
 protocol MainViewPresenterProtocol: AnyObject {
     var filmsCollection: [FilmsCollection]? { get set }
+    // TODO: Remove duplicate
     var filmsCollection2: [FilmsCollection]? { get set }
     var delegate: MainPresenterDelegate? { get set }
     var filmDescription: FilmDetails? { get set }
     
+    // TODO: Looks like you are not using it, consider removing this function
     func getId(id: String)
     func getData()
 }
@@ -18,6 +20,7 @@ protocol MainViewPresenterProtocol: AnyObject {
 public class MainPresenter: MainViewPresenterProtocol {
   
     public var filmsCollection: [FilmsCollection]? = []
+    // TODO: Remove duplicate
     public var filmsCollection2: [FilmsCollection]? = []
     var filmDescription: FilmDetails?
 

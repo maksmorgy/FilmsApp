@@ -19,6 +19,7 @@ class MovieCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // TODO: Fix alignment
      func configureViews() {
         myImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -29,6 +30,7 @@ class MovieCell: UICollectionViewCell {
         ])
     }
     
+    // TODO: Pass "Film" model
     func setURL(url: URL) {
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {

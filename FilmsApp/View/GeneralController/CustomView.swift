@@ -1,6 +1,8 @@
 import Foundation
 import UIKit
 
+// TODO: Rename
+
 class CustomView: UIView {
     var labelText: String
     init(frame: CGRect, labelText: String) {

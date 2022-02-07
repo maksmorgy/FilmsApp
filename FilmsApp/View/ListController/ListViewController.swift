@@ -1,6 +1,8 @@
 import Foundation
 import UIKit
 
+// TODO: Look through all of the code and make properties that are not used outside of a class private
+
 class ListViewController: UIViewController {
     
     var listTableView: UITableView = {

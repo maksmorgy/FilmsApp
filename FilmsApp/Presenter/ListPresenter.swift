@@ -19,7 +19,9 @@ protocol ListPresenterProtocol {
 public class ListPresenter: ListPresenterProtocol {
     var delegate: ListPresenterDelegate?
     var films: [Film]?
+    // TODO: Remove unneeded property
     var images: [UIImage]?
+    // TODO: Pass CoreDataManager via initializer
     let context = CoreDataManager.instance.persistentContainer.viewContext
 
     
@@ -27,6 +29,8 @@ public class ListPresenter: ListPresenterProtocol {
         self.films = data.films
         delegate?.updateData()
     }
+    
+    // TODO: Replace methods below with "filmAtIndex" method
     
     func titleAtindex(index: Int) -> String? {
         let title = films?[index].title
@@ -50,6 +54,7 @@ public class ListPresenter: ListPresenterProtocol {
     func saveFilms(title: String?, image: UIImage?) {
         let moFilm = MOFilm(context: self.context)
         moFilm.filmTitle = title
+        // TODO: Remove forced unwrapping
         let data = image!.pngData()
         moFilm.filmImage = data
         CoreDataManager.instance.saveContext()

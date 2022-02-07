@@ -1,8 +1,14 @@
 import Foundation
 import UIKit
 
+// TODO: Look through all of the code and remove unneeded empty lines
+
 class DetailController: UIViewController {
+    // TODO: Consider removing this property. You already have it in presenter
     let filmId: String
+    
+    // TODO: Make all following properties private
+    
     var presenter: DetailPresenterProtocol?
     
     let imageView: UIImageView = {
@@ -48,6 +54,7 @@ class DetailController: UIViewController {
     }
     
     override func viewDidLoad() {
+        // TODO: This variable is never used, remove it
         var description = presenter?.filmDescription
         view.backgroundColor = .white
         view.addSubview(imageView)
@@ -59,8 +66,10 @@ class DetailController: UIViewController {
         setupLayout()
     }
     
+    // TODO: Move configuration to extensions
+    
     private func setupLayout() {
-        
+        // TODO: Use NSLayoutConstraint.activate
         titleTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         titleTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         titleTextView.widthAnchor.constraint(equalToConstant: 400).isActive = true
@@ -88,12 +97,12 @@ class DetailController: UIViewController {
     }
     
     func updateFontSize() {
+        // TODO: "self" can be omitted
         self.titleTextView.font = .systemFont(ofSize: 30)
         self.countryTextView.font = .systemFont(ofSize: 20)
         self.genreTextView.font = .systemFont(ofSize: 20)
         self.ratingTextView.font = .systemFont(ofSize: 20)
     }
-    
 }
 
 extension DetailController: DetailPresenterDelegate {

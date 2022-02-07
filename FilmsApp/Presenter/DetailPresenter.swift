@@ -7,11 +7,12 @@ protocol DetailPresenterDelegate: AnyObject {
 protocol DetailPresenterProtocol: AnyObject {
     var filmDescription: FilmDetails? { get set }
     var delegate: DetailPresenterDelegate? { get set }
-    
+    // TODO: You already have an ID, consider naming it "fetchMovieDetails" or something else
     func getId(id: String)
 }
 
 public class DetailPresenter: DetailPresenterProtocol {
+    // TODO: Make these properties private
     var filmDescription: FilmDetails?
     var filmId: String
     

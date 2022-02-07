@@ -3,6 +3,8 @@ import UIKit
 
 class MovieListCell: UITableViewCell {
     
+    // TODO: Make constants and private
+    
     var movieListLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -18,9 +20,13 @@ class MovieListCell: UITableViewCell {
     }()
     
     var loadingIndicator = UIActivityIndicatorView(style: .large)
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
+    
+    // TODO: Move views configurations to extensions
     
     func createMovie() {
         addSubview(movieListImage)
@@ -75,6 +81,8 @@ class MovieListCell: UITableViewCell {
 //            movieListLabel.text = ""
 //        }
 //    }
+    
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

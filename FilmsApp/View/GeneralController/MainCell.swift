@@ -4,6 +4,9 @@ import UIKit
 class MoviesCollectionCell: UITableViewCell {
     
     private var imageURLs: [URL] = []
+    
+    // TODO: Make private
+    
     let cell = "CollectionCell"
     
     lazy var moviesCollectionView: UICollectionView = {
@@ -40,6 +43,8 @@ class MoviesCollectionCell: UITableViewCell {
             moviesCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
+    
+    // TODO: Pass [Film]
     
     public func setImages(_ urls: [URL]) {
         self.imageURLs = urls

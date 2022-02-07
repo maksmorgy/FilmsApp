@@ -11,6 +11,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     }()
     
     let cellReuseIdentifier = "favouriteCell"
+    // TODO: Should be constant
     var presenter: FavouritePresenterProtocol
     
     override func viewDidLoad() {
@@ -33,6 +34,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        // TODO: No need to dispatch to the main queue. It is already on the main queue.
         DispatchQueue.main.async {
             self.presenter.loadFilms()
         }
@@ -65,6 +67,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // TODO: Apply Swift suggestion
         var cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         
         if  let customCell = cell as? FavouriteCell {

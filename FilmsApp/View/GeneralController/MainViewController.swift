@@ -1,5 +1,9 @@
 import UIKit
 
+// TODO: Rename folder "GeneralController" to "Main", "FavouriteController" to "Favourite" and "ListController" to "List"
+
+// TODO: Remove commented code
+
 //class CustomView: UIView {
 //    var labelText: String
 //    init(frame: CGRect, labelText: String) {
@@ -30,12 +34,16 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    // TODO: Make constant and private
     var moviesCollectionsTableView: UITableView = {
         let movieCollection = UITableView()
         movieCollection.translatesAutoresizingMaskIntoConstraints = false
         return movieCollection
     }()
+    
+    // TODO: Make constant and private
     var presenter: MainViewPresenterProtocol
+    // TODO: Remove unneeded object
     var customView = UIView()
     let cellReuseIdentifier = "mainCell"
     
@@ -46,6 +54,8 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
+    // TODO: Put initializers right after properties list
+    
     init(presenter: MainViewPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -55,6 +65,8 @@ class MainViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // TODO: Move views configurations to extensions
     
     private func createTableView() {
         view.addSubview(moviesCollectionsTableView)
@@ -89,6 +101,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         if let customCell = cell as? MoviesCollectionCell {
             DispatchQueue.main.async {
+                // TODO: Apply swift suggestion
                 let images = self.presenter.filmsCollection?[indexPath.section].films.compactMap{ $0.imageURL as? URL}
                 customCell.setImages(images!)
             }
@@ -104,7 +117,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // TODO: Apply swift suggestion
         var genre = presenter.filmsCollection?[section].title
+        // TODO: Apply swift suggestion
         var view = CustomView(frame: CGRect(x: 0, y: 0, width: 300, height: 44), labelText: genre ?? "")
         
         let tapGestureRecognizer = UITapGestureRecognizer(

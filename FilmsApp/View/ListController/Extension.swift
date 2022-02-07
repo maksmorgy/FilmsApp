@@ -1,8 +1,25 @@
 import Foundation
 import UIKit
+// TODO: Add empty line after imports
+// TODO: Rename extension file to "UIView+Anchor"
 extension UIView {
     
-    func anchor (top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat, enableInsets: Bool) {
+    // TODO: Remove empty space after method name
+    // TODO: Consider adding default values
+    func anchor(
+        top: NSLayoutYAxisAnchor?,
+        left: NSLayoutXAxisAnchor?,
+        bottom: NSLayoutYAxisAnchor?,
+        right: NSLayoutXAxisAnchor?,
+        paddingTop: CGFloat,
+        paddingLeft: CGFloat,
+        paddingBottom: CGFloat,
+        paddingRight: CGFloat,
+        width: CGFloat,
+        height: CGFloat,
+        enableInsets: Bool
+    ) {
+        // TODO: Change var topInset: CGFloat = 0
         var topInset = CGFloat(0)
         var bottomInset = CGFloat(0)
         
@@ -15,9 +32,11 @@ extension UIView {
         translatesAutoresizingMaskIntoConstraints = false
         
         if let top = top {
+            // TODO: Remove self
             self.topAnchor.constraint(equalTo: top, constant: paddingTop+topInset).isActive = true
         }
         if let left = left {
+            // TODO: Remove self
             self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
         }
         if let right = right {
