@@ -15,15 +15,23 @@ protocol FavouritePresenterProtocol: AnyObject {
 }
 
 public class FavouritePresenter: FavouritePresenterProtocol {
+    
+    // MARK: - Properties
     private var films: [MOFilm]?
     weak var delegate: FavouritePresenterDelegate?
-    private let context = CoreDataManager.instance.persistentContainer.viewContext
+    private var managerCD = CoreDataManager()
     
+    // MARK: - Initialization
+    init(managerCD: CoreDataManager) {
+        self.managerCD = managerCD
+    }
+    
+    // MARK: - Action
     func loadFilms() {
         let request : NSFetchRequest<MOFilm> = MOFilm.fetchRequest()
         
         do{
-            films = try context.fetch(request)
+            films = try managerCD.persistentContainer.viewContext.fetch(request)
             delegate?.updataData(data: films!)
         } catch {
             print("Error loading categories \(error)")
@@ -41,6 +49,6 @@ public class FavouritePresenter: FavouritePresenterProtocol {
     
     func deleteFilm(data: MOFilm, index: Int) {
         self.films?.remove(at: index)
-        CoreDataManager.instance.delete(film: data)
+        managerCD.delete(film: data)
     }
 }

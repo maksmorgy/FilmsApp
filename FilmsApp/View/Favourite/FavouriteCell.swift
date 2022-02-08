@@ -3,7 +3,8 @@ import UIKit
 
 class FavouriteCell: UITableViewCell {
     
-    let favouriteLabel: UILabel = {
+    // MARK: - Properties
+    private let favouriteLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -11,19 +12,44 @@ class FavouriteCell: UITableViewCell {
         return label
     }()
     
-    let favouriteImage: UIImageView = {
+    private let favouriteImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         return image
     }()
     
-    let loadingIndicator = UIActivityIndicatorView(style: .large)
+    private let loadingIndicator = UIActivityIndicatorView(style: .large)
     
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    func createMovie() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Action
+    func updateAppearanceFor (content: MOFilm?) {
+        DispatchQueue.main.async {
+            if let image = UIImage(data: (content?.filmImage)!){
+                self.favouriteLabel.text = content?.filmTitle
+                self.favouriteImage.image = image
+                self.setupLayoutFilm()
+                self.loadingIndicator.stopAnimating()
+            } else {
+                self.setupLayoutIndicator()
+                self.loadingIndicator.startAnimating()
+                self.favouriteLabel.text = ""
+                self.favouriteImage.image = .none
+            }
+        }
+    }
+}
+
+// MARK: - Setup Layout
+extension FavouriteCell {
+    func setupLayoutFilm() {
         addSubview(favouriteImage)
         addSubview(favouriteLabel)
         
@@ -31,37 +57,12 @@ class FavouriteCell: UITableViewCell {
         favouriteLabel.anchor(top: topAnchor, left: favouriteImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 250, height: 0, enableInsets: false)
     }
     
-    func updateAppearanceFor (content: MOFilm?) {
-        DispatchQueue.main.async {
-            self.displayContent(content)
-        }
-    }
-    
-    func createLoadingIndicator() {
+    func setupLayoutIndicator() {
         addSubview(loadingIndicator)
         NSLayoutConstraint.activate([
             loadingIndicator.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             loadingIndicator.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
     }
-    
-    func displayContent(_ content: MOFilm?) {
-        DispatchQueue.main.async {
-            if let image = UIImage(data: (content?.filmImage)!){
-                self.favouriteLabel.text = content?.filmTitle
-                self.favouriteImage.image = image
-                self.createMovie()
-                self.loadingIndicator.stopAnimating()
-            } else {
-                self.createLoadingIndicator()
-                self.loadingIndicator.startAnimating()
-                self.favouriteLabel.text = ""
-                self.favouriteImage.image = .none
-            }
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
+

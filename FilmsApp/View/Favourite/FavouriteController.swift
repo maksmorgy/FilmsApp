@@ -2,17 +2,20 @@ import Foundation
 import UIKit
 import CoreData
 
-class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FavouriteController: UIViewController {
     
-    let favouriteTableView: UITableView = {
+    // MARK: - Properties
+   lazy private var favouriteTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(FavouriteCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         return tableView
     }()
     
-    let cellReuseIdentifier = "favouriteCell"
-    let presenter: FavouritePresenterProtocol
+    private let cellReuseIdentifier = "favouriteCell"
+    private let presenter: FavouritePresenterProtocol
     
+    // MARK: - Initialization
     init(presenter: FavouritePresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -23,19 +26,21 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         favouriteTableView.delegate = self
         favouriteTableView.dataSource = self
-        createTableView()
+        setupLayout()
         presenter.loadFilms()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-            presenter.loadFilms()
+        presenter.loadFilms()
     }
     
+    // MARK: - Swipe Action
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
         let deleteAction = UIContextualAction(style: .destructive, title:  "Delete", handler: { (action, view, completionHandler:(Bool) -> Void) in
@@ -46,18 +51,23 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         })
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-    
-    private func createTableView() {
+}
+
+//MARK: - Setup Layout
+private extension FavouriteController {
+    func setupLayout() {
         view.addSubview(favouriteTableView)
         NSLayoutConstraint.activate([
             favouriteTableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
             favouriteTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
             favouriteTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
             favouriteTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
-            ])
-        favouriteTableView.register(FavouriteCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        ])
     }
-    
+}
+
+//MARK: - UITableViewDataSource
+extension FavouriteController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.numbersOfFilms()
     }
@@ -71,12 +81,16 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         return cell
     }
-    
+}
+
+//MARK: - UITableViewDelegate
+extension FavouriteController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
 }
 
+//MARK: - FavouritePresenterDelegate
 extension FavouriteController: FavouritePresenterDelegate {
     func updataData(data: [MOFilm]) {
         self.favouriteTableView.reloadData()
