@@ -21,12 +21,14 @@ class MovieCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // TODO: Pass "Film" model
-    func setURL(url: URL) {
+    //MARK: - Action
+    func setFilm(film: Film?) {
         DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+            if let data = try? Data(contentsOf: (film?.imageURL)!) {
+               if let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     self?.myImageView.image = image
+                }
                 }
             }
         }

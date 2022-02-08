@@ -1,9 +1,5 @@
 import UIKit
 
-// TODO: Rename folder "GeneralController" to "Main", "FavouriteController" to "Favourite" and "ListController" to "List"
-// TODO: Make constant and private
-// TODO: Put initializers right after properties list
-// TODO: Move views configurations to extensions
 class MainViewController: UIViewController {
     
     // MARK: - Properties
@@ -33,7 +29,6 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Films"
-        navigationController?.navigationBar.prefersLargeTitles = true
         setupViews()
     }
     
@@ -76,8 +71,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         if let customCell = cell as? MoviesCollectionCell {
             DispatchQueue.main.async {
-                let images = self.presenter.filmsCollection?[indexPath.section].films.compactMap{ $0.imageURL}
-                customCell.setImages(images!)
+                let films = self.presenter.filmsCollection?[indexPath.section].films.compactMap{ $0 }
+                customCell.setFilms(films)
             }
             return customCell
         }
@@ -86,7 +81,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
         guard let section = sender?.view?.tag, let film = presenter.filmsCollection?[section] else { return }
-        let newViewController = ListViewController(data: film, presenter: ListPresenter())
+        let newViewController = ListViewController(presenter: ListPresenter(managerCD: CoreDataManager(), data: film))
         navigationController?.pushViewController(newViewController, animated: true)
     }
     
