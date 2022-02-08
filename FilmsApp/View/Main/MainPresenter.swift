@@ -1,8 +1,8 @@
 import Foundation
 
 public protocol MainPresenterDelegate: AnyObject {
-    func fetchedMovies()
-    func failedToFetchMovies(error: Error)
+    func fetchedFilms()
+    func failedToFetchFilms(error: Error)
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
@@ -21,10 +21,10 @@ public class MainPresenter: MainViewPresenterProtocol {
     
     public weak var delegate: MainPresenterDelegate?
     private let dataTransferService: DataTransferService
-    private let endpoints: MoviesEnpdoints
+    private let endpoints: FilmsEnpdoints
     
     // MARK: - Initialization
-    public init(dataTransferService: DataTransferService, endpoints: MoviesEnpdoints) {
+    public init(dataTransferService: DataTransferService, endpoints: FilmsEnpdoints) {
         self.dataTransferService = dataTransferService
         self.endpoints = endpoints
         self.getData()
@@ -35,42 +35,42 @@ public class MainPresenter: MainViewPresenterProtocol {
         let actionTitle = "action"
         let comedyTitle = "comedy"
         let topTitle = "Top Films"
-        dataTransferService.request(with: endpoints.movies(with: actionTitle)) {  [weak self] result in
+        dataTransferService.request(with: endpoints.films(with: actionTitle)) {  [weak self] result in
             switch result {
-            case .success(let moviesResponse):
-                let movies = moviesResponse.results.map { item in
+            case .success(let filmsResponse):
+                let films = filmsResponse.results.map { item in
                     return Film(filmId: item.id, title: item.title, imageURL: URL(string: item.image))
                 }
-                self?.filmsCollection?.append(FilmsCollection(films: movies, title: actionTitle))
-                self?.delegate?.fetchedMovies()
+                self?.filmsCollection?.append(FilmsCollection(films: films, title: actionTitle))
+                self?.delegate?.fetchedFilms()
             case .failure(let error):
-                self?.delegate?.failedToFetchMovies(error: error)
+                self?.delegate?.failedToFetchFilms(error: error)
             }
         }
         
-        dataTransferService.request(with: endpoints.movies(with: comedyTitle)) {  [weak self] result in
+        dataTransferService.request(with: endpoints.films(with: comedyTitle)) {  [weak self] result in
             switch result {
-            case .success(let moviesResponse):
-                let movies = moviesResponse.results.map { item in
+            case .success(let filmsResponse):
+                let films = filmsResponse.results.map { item in
                     return Film(filmId: item.id, title: item.title, imageURL: URL(string: item.image))
                 }
-                self?.filmsCollection?.append(FilmsCollection(films: movies, title: comedyTitle))
-                self?.delegate?.fetchedMovies()
+                self?.filmsCollection?.append(FilmsCollection(films: films, title: comedyTitle))
+                self?.delegate?.fetchedFilms()
             case .failure(let error):
-                self?.delegate?.failedToFetchMovies(error: error)
+                self?.delegate?.failedToFetchFilms(error: error)
             }
         }
         
-        dataTransferService.request(with: endpoints.topMovies()) { [weak self] result in
+        dataTransferService.request(with: endpoints.topFilms()) { [weak self] result in
             switch result {
-            case .success(let moviesResponse):
-                let movies = moviesResponse.items.map { item in
+            case .success(let filmsResponse):
+                let films = filmsResponse.items.map { item in
                     return Film(filmId: item.id, title: item.title, imageURL: URL(string: item.image))
                 }
-                self?.filmsCollection?.append(FilmsCollection(films: movies, title: topTitle))
-                self?.delegate?.fetchedMovies()
+                self?.filmsCollection?.append(FilmsCollection(films: films, title: topTitle))
+                self?.delegate?.fetchedFilms()
             case .failure(let error):
-                self?.delegate?.failedToFetchMovies(error: error)
+                self?.delegate?.failedToFetchFilms(error: error)
             }
         }
     }

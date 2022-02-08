@@ -1,10 +1,10 @@
 import Foundation
 import UIKit
 
-class MovieListCell: UITableViewCell {
+class FilmListCell: UITableViewCell {
     
     // MARK: - Properties
-    private let movieListLabel: UILabel = {
+    private let filmListLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -12,7 +12,7 @@ class MovieListCell: UITableViewCell {
         return label
     }()
     
-    private let movieListImage: UIImageView = {
+    private let filmListImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         return image
@@ -34,8 +34,8 @@ class MovieListCell: UITableViewCell {
         DispatchQueue.main.async {
             if let url: URL = film?.imageURL, let title = film?.title {
                 if let data = try? Data(contentsOf: url) {
-                    self.movieListImage.image = UIImage(data: data)
-                    self.movieListLabel.text = title
+                    self.filmListImage.image = UIImage(data: data)
+                    self.filmListLabel.text = title
                     self.setupLayoutFilm()
                 }
             }
@@ -44,13 +44,13 @@ class MovieListCell: UITableViewCell {
     }
 
 // MARK: - Setup Layout
-private extension MovieListCell {
+private extension FilmListCell {
     func setupLayoutFilm() {
-        addSubview(movieListImage)
-        addSubview(movieListLabel)
+        addSubview(filmListImage)
+        addSubview(filmListLabel)
         
-        movieListImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
-        movieListLabel.anchor(top: topAnchor, left: movieListImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 250, height: 0, enableInsets: false)
+        filmListImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
+        filmListLabel.anchor(top: topAnchor, left: filmListImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 250, height: 0, enableInsets: false)
     }
     
     func setupLayoutLoadungIndicator() {

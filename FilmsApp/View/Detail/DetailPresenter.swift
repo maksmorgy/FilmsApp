@@ -7,7 +7,7 @@ protocol DetailPresenterDelegate: AnyObject {
 protocol DetailPresenterProtocol: AnyObject {
     var filmDescription: FilmDetails? { get set }
     var delegate: DetailPresenterDelegate? { get set }
-    func fetchMovieDetails(id: String)
+    func fetchFilmDetails(id: String)
 }
 
 public class DetailPresenter: DetailPresenterProtocol {
@@ -18,23 +18,23 @@ public class DetailPresenter: DetailPresenterProtocol {
     
     weak var delegate: DetailPresenterDelegate?
     private let dataTransferService: DataTransferService
-    private let endpoints: MoviesEnpdoints
+    private let endpoints: FilmsEnpdoints
     
     // MARK: - Initialization
-    public init(dataTransferService: DataTransferService, endpoints: MoviesEnpdoints, id: String) {
+    public init(dataTransferService: DataTransferService, endpoints: FilmsEnpdoints, id: String) {
         self.dataTransferService = dataTransferService
         self.endpoints = endpoints
         self.filmId = id
-        self.fetchMovieDetails(id: id)
+        self.fetchFilmDetails(id: id)
     }
     
     // MARK: - Action
-    func fetchMovieDetails(id: String) {
-        dataTransferService.request(with: endpoints.movie(with: id)) { [weak self] result in
+    func fetchFilmDetails(id: String) {
+        dataTransferService.request(with: endpoints.film(with: id)) { [weak self] result in
             switch result {
-            case .success(let movieResponse):
-                let movie = FilmDetails(id: movieResponse.id ?? "", originalTitle: movieResponse.title ?? "", genres: movieResponse.genres ?? "", countries: movieResponse.countries ?? "", rating: movieResponse.imDbRating ?? "", image: movieResponse.image ?? "")
-                self?.filmDescription = movie
+            case .success(let filmResponse):
+                let film = FilmDetails(id: filmResponse.id ?? "", originalTitle: filmResponse.title ?? "", genres: filmResponse.genres ?? "", countries: filmResponse.countries ?? "", rating: filmResponse.imDbRating ?? "", image: filmResponse.image ?? "")
+                self?.filmDescription = film
                 self?.delegate?.updateData(data: self?.filmDescription)
                 
             case .failure(let error):

@@ -59,7 +59,7 @@ private extension ListViewController {
             listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        listTableView.register(MovieListCell.self, forCellReuseIdentifier: cellReuseIndentifier)
+        listTableView.register(FilmListCell.self, forCellReuseIdentifier: cellReuseIndentifier)
         listTableView.delegate = self
         listTableView.dataSource = self
     }
@@ -74,7 +74,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIndentifier, for: indexPath)
         
-        if let customCell = cell as? MovieListCell {
+        if let customCell = cell as? FilmListCell {
             DispatchQueue.main.async {
                 customCell.updateAppearanceFor(film: self.presenter.filmAtIndex(index: indexPath.row))
             }
@@ -84,7 +84,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? MovieListCell else { return }
+        guard let cell = cell as? FilmListCell else { return }
         cell.updateAppearanceFor(film: self.presenter.filmAtIndex(index: indexPath.row))
     }
     
@@ -92,7 +92,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         listTableView.deselectRow(at: indexPath, animated: true )
         let filmId = self.presenter.filmAtIndex(index: indexPath.row)?.filmId
         let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
-        let endpoints = DefaultMoviesEnpdoints()
+        let endpoints = DefaultFilmsEnpdoints()
         let newViewController = DetailController(presenter: DetailPresenter(dataTransferService: dataTransferService, endpoints: endpoints, id: filmId ?? ""))
         self.navigationController?.pushViewController(newViewController, animated: true)
     }

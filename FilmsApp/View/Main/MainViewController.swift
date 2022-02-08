@@ -3,12 +3,12 @@ import UIKit
 class MainViewController: UIViewController {
     
     // MARK: - Properties
-    private let moviesCollectionsTableView: UITableView = {
-        let movieCollection = UITableView()
-        movieCollection.translatesAutoresizingMaskIntoConstraints = false
-        movieCollection.backgroundColor = .white
-        movieCollection.isUserInteractionEnabled = true
-        return movieCollection
+    private let filmsCollectionsTableView: UITableView = {
+        let filmCollection = UITableView()
+        filmCollection.translatesAutoresizingMaskIntoConstraints = false
+        filmCollection.backgroundColor = .white
+        filmCollection.isUserInteractionEnabled = true
+        return filmCollection
     }()
     
     private let presenter: MainViewPresenterProtocol
@@ -37,23 +37,23 @@ class MainViewController: UIViewController {
 private extension MainViewController {
     func setupViews() {
         createTableView()
-        createMoviesCollectionView()
+        createFilmsCollectionView()
     }
     
     func createTableView() {
-        view.addSubview(moviesCollectionsTableView)
+        view.addSubview(filmsCollectionsTableView)
         NSLayoutConstraint.activate([
-            moviesCollectionsTableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
-            moviesCollectionsTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
-            moviesCollectionsTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
-            moviesCollectionsTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+            filmsCollectionsTableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+            filmsCollectionsTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            filmsCollectionsTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+            filmsCollectionsTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
         ])
     }
     
-    func createMoviesCollectionView() {
-        moviesCollectionsTableView.register(MoviesCollectionCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        moviesCollectionsTableView.delegate = self
-        moviesCollectionsTableView.dataSource = self
+    func createFilmsCollectionView() {
+        filmsCollectionsTableView.register(FilmsCollectionCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        filmsCollectionsTableView.delegate = self
+        filmsCollectionsTableView.dataSource = self
     }
 }
 
@@ -69,7 +69,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        if let customCell = cell as? MoviesCollectionCell {
+        if let customCell = cell as? FilmsCollectionCell {
             DispatchQueue.main.async {
                 let films = self.presenter.filmsCollection?[indexPath.section].films.compactMap{ $0 }
                 customCell.setFilms(films)
@@ -109,13 +109,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - MainPresenterDelegate
 extension MainViewController: MainPresenterDelegate {
     
-    func fetchedMovies() {
+    func fetchedFilms() {
         DispatchQueue.main.async {
-            self.moviesCollectionsTableView.reloadData()
+            self.filmsCollectionsTableView.reloadData()
         }
     }
     
-    func failedToFetchMovies(error: Error) {
+    func failedToFetchFilms(error: Error) {
         print(error.localizedDescription)
     }
 }

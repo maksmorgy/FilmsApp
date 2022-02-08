@@ -1,13 +1,13 @@
 import Foundation
 import UIKit
 
-class MoviesCollectionCell: UITableViewCell {
+class FilmsCollectionCell: UITableViewCell {
     
     // MARK: - Properties
     private var films: [Film]? = []
     private let cell = "CollectionCell"
     
-    lazy var moviesCollectionView: UICollectionView = {
+    lazy var filmsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5
@@ -18,7 +18,7 @@ class MoviesCollectionCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
-        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: cell)
+        collectionView.register(FilmCell.self, forCellWithReuseIdentifier: cell)
         collectionView.backgroundColor = .white
         return collectionView
     }()
@@ -35,32 +35,32 @@ class MoviesCollectionCell: UITableViewCell {
     
     public func setFilms(_ films: [Film]?) {
         self.films = films
-        moviesCollectionView.reloadData()
+        filmsCollectionView.reloadData()
     }
 }
 
 // MARK: - Setup Layout
-extension MoviesCollectionCell {
+extension FilmsCollectionCell {
     func setupLayout() {
-        contentView.addSubview(moviesCollectionView)
+        contentView.addSubview(filmsCollectionView)
         NSLayoutConstraint.activate([
-            moviesCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            moviesCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            moviesCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-            moviesCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            filmsCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            filmsCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            filmsCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            filmsCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
 }
 
 //MARK: - UICollectionViewDataSource
-extension MoviesCollectionCell: UICollectionViewDataSource {
+extension FilmsCollectionCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return films?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell, for: indexPath)
-        if let customCell = cell as? MovieCell {
+        if let customCell = cell as? FilmCell {
             let film = films?[indexPath.row]
             customCell.setFilm(film: film)
             return customCell
@@ -70,7 +70,7 @@ extension MoviesCollectionCell: UICollectionViewDataSource {
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
-extension MoviesCollectionCell: UICollectionViewDelegateFlowLayout {
+extension FilmsCollectionCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/5, height: collectionView.frame.height)
     }

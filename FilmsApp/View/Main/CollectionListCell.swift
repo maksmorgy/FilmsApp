@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class MovieCell: UICollectionViewCell {
+class FilmCell: UICollectionViewCell {
     
     // MARK: - Properties
     private let myImageView: UIImageView = {
@@ -36,7 +36,7 @@ class MovieCell: UICollectionViewCell {
 }
 
 //MARK: - Setup Layout
-extension MovieCell {
+extension FilmCell {
     func setupLayout() {
         contentView.addSubview(myImageView)
         NSLayoutConstraint.activate([
