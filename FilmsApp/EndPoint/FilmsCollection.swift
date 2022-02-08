@@ -19,7 +19,6 @@ struct FilmDetails {
     let countries: String
     let rating: String
     let image: String
-    
 }
 
 
