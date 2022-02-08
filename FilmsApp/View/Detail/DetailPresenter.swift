@@ -7,27 +7,29 @@ protocol DetailPresenterDelegate: AnyObject {
 protocol DetailPresenterProtocol: AnyObject {
     var filmDescription: FilmDetails? { get set }
     var delegate: DetailPresenterDelegate? { get set }
-    // TODO: You already have an ID, consider naming it "fetchMovieDetails" or something else
-    func getId(id: String)
+    func fetchMovieDetails(id: String)
 }
 
 public class DetailPresenter: DetailPresenterProtocol {
-    // TODO: Make these properties private
-    var filmDescription: FilmDetails?
-    var filmId: String
+    
+    // MARK: - Properties
+    internal var filmDescription: FilmDetails?
+    private var filmId: String
     
     weak var delegate: DetailPresenterDelegate?
     private let dataTransferService: DataTransferService
     private let endpoints: MoviesEnpdoints
     
+    // MARK: - Initialization
     public init(dataTransferService: DataTransferService, endpoints: MoviesEnpdoints, id: String) {
         self.dataTransferService = dataTransferService
         self.endpoints = endpoints
         self.filmId = id
-        self.getId(id: id)
+        self.fetchMovieDetails(id: id)
     }
     
-    func getId(id: String) {
+    // MARK: - Action
+    func fetchMovieDetails(id: String) {
         dataTransferService.request(with: endpoints.movie(with: id)) { [weak self] result in
             switch result {
             case .success(let movieResponse):

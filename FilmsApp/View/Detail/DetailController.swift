@@ -1,51 +1,46 @@
 import Foundation
 import UIKit
 
-// TODO: Look through all of the code and remove unneeded empty lines
-
 class DetailController: UIViewController {
-    // TODO: Consider removing this property. You already have it in presenter
-    let filmId: String
     
-    // TODO: Make all following properties private
+    // MARK: - Properties
+    private var presenter: DetailPresenterProtocol
     
-    var presenter: DetailPresenterProtocol?
-    
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
-    var titleTextView: UITextView = {
+    private let titleTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
-    let ratingTextView: UITextView = {
+    private let ratingTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
-    let genreTextView: UITextView = {
+    private let genreTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
-    let countryTextView: UITextView = {
+    private let countryTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
-    init(id: String, presenter: DetailPresenterProtocol) {
-        self.filmId = id
+    // MARK: - Initialization
+    init(presenter: DetailPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        self.presenter?.delegate = self
+        self.presenter.delegate = self
         
     }
     
@@ -53,58 +48,71 @@ class DetailController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
-        // TODO: This variable is never used, remove it
-        var description = presenter?.filmDescription
         view.backgroundColor = .white
+        addObjects()
+        setupLayout()
+    }
+}
+
+// MARK: - Setup Layout
+private extension DetailController {
+    func addObjects() {
         view.addSubview(imageView)
         view.addSubview(titleTextView)
         
         view.addSubview(ratingTextView)
         view.addSubview(genreTextView)
         view.addSubview(countryTextView)
-        setupLayout()
     }
     
-    // TODO: Move configuration to extensions
-    
-    private func setupLayout() {
-        // TODO: Use NSLayoutConstraint.activate
-        titleTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        titleTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        titleTextView.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        titleTextView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    func setupLayout() {
+        NSLayoutConstraint.activate([
+            titleTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            titleTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            titleTextView.widthAnchor.constraint(equalToConstant: 400),
+            titleTextView.heightAnchor.constraint(equalToConstant: 40)
+        ])
         
-        imageView.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 30).isActive = true
-        imageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 30),
+            imageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            imageView.widthAnchor.constraint(equalToConstant: 200),
+            imageView.heightAnchor.constraint(equalToConstant: 300)
+        ])
         
-        ratingTextView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20).isActive = true
-        ratingTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        ratingTextView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        ratingTextView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        NSLayoutConstraint.activate([
+            ratingTextView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            ratingTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            ratingTextView.widthAnchor.constraint(equalToConstant: 200),
+            ratingTextView.heightAnchor.constraint(equalToConstant: 30)
+        ])
         
-        genreTextView.topAnchor.constraint(equalTo: ratingTextView.bottomAnchor, constant: 20).isActive = true
-        genreTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        genreTextView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        genreTextView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        NSLayoutConstraint.activate([
+            genreTextView.topAnchor.constraint(equalTo: ratingTextView.bottomAnchor, constant: 20),
+            genreTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            genreTextView.widthAnchor.constraint(equalToConstant: 200),
+            genreTextView.heightAnchor.constraint(equalToConstant: 30)
+        ])
         
-        countryTextView.topAnchor.constraint(equalTo: genreTextView.bottomAnchor, constant: 20).isActive = true
-        countryTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        countryTextView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        countryTextView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        NSLayoutConstraint.activate([
+            countryTextView.topAnchor.constraint(equalTo: genreTextView.bottomAnchor, constant: 20),
+            countryTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            countryTextView.widthAnchor.constraint(equalToConstant: 200),
+            countryTextView.heightAnchor.constraint(equalToConstant: 30)
+        ])
     }
     
     func updateFontSize() {
-        // TODO: "self" can be omitted
-        self.titleTextView.font = .systemFont(ofSize: 30)
-        self.countryTextView.font = .systemFont(ofSize: 20)
-        self.genreTextView.font = .systemFont(ofSize: 20)
-        self.ratingTextView.font = .systemFont(ofSize: 20)
+        titleTextView.font = .systemFont(ofSize: 30)
+        countryTextView.font = .systemFont(ofSize: 20)
+        genreTextView.font = .systemFont(ofSize: 20)
+        ratingTextView.font = .systemFont(ofSize: 20)
     }
 }
 
+//MARK: - DetailPresenterDelegate
 extension DetailController: DetailPresenterDelegate {
     func updateData(data: FilmDetails?) {
         DispatchQueue.main.async {
@@ -117,14 +125,8 @@ extension DetailController: DetailPresenterDelegate {
             
             let url = URL(string: data!.image)
             if let data = try? Data(contentsOf: url!), let image = UIImage(data: data) {
-                    self.imageView.image = image
+                self.imageView.image = image
             }
         }
-        
-        
     }
-    
-    
-    
-    
 }
