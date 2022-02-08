@@ -14,11 +14,10 @@ class ListViewController: UIViewController {
     var presenter: ListPresenterProtocol
     
     // MARK: - Initialization
-    init(data: FilmsCollection, presenter: ListPresenterProtocol ) {
+    init(presenter: ListPresenterProtocol ) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
         self.presenter.delegate = self
-        self.presenter.loadData(data: data)
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +35,10 @@ class ListViewController: UIViewController {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: "Favourite") { (_, _, completionHandler) in
             DispatchQueue.global().async {
-                self.presenter.saveFilms(title: self.presenter.titleAtindex(index: indexPath.row), image: self.presenter.imageAtindex(index: indexPath.row))
+                self.presenter.saveFilms(
+                    title: self.presenter.filmAtIndex(index: indexPath.row)?.title,
+                    url: self.presenter.filmAtIndex(index:indexPath.row)?.imageURL
+                )
                 DispatchQueue.main.async {
                     completionHandler(true)
                 }
@@ -48,7 +50,7 @@ class ListViewController: UIViewController {
 }
 
 //MARK: - Setup Layout
-extension ListViewController {
+private extension ListViewController {
     func setupLayout() {
         view.addSubview(listTableView)
         NSLayoutConstraint.activate([
@@ -74,7 +76,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         
         if let customCell = cell as? MovieListCell {
             DispatchQueue.main.async {
-                customCell.updateAppearanceFor(title: self.presenter.titleAtindex(index: indexPath.row), image: self.presenter.imageAtindex(index: indexPath.row))
+                customCell.updateAppearanceFor(film: self.presenter.filmAtIndex(index: indexPath.row))
             }
             return customCell
         }
@@ -83,15 +85,15 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? MovieListCell else { return }
-        cell.updateAppearanceFor(title: self.presenter.titleAtindex(index: indexPath.row), image: self.presenter.imageAtindex(index: indexPath.row))
+        cell.updateAppearanceFor(film: self.presenter.filmAtIndex(index: indexPath.row))
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         listTableView.deselectRow(at: indexPath, animated: true )
-        let filmId = self.presenter.idAtindex(index: indexPath.row)//data.films[indexPath.row].filmId
+        let filmId = self.presenter.filmAtIndex(index: indexPath.row)?.filmId
         let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
         let endpoints = DefaultMoviesEnpdoints()
-        let newViewController = DetailController(id: filmId ?? "", presenter: DetailPresenter(dataTransferService: dataTransferService, endpoints: endpoints, id: filmId ?? ""))
+        let newViewController = DetailController(presenter: DetailPresenter(dataTransferService: dataTransferService, endpoints: endpoints, id: filmId ?? ""))
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
     

@@ -30,20 +30,21 @@ class MovieListCell: UITableViewCell {
     }
     
     // MARK: - Action
-    func updateAppearanceFor (title: String?, image: UIImage?) {
+    func updateAppearanceFor (film: Film?) {
         DispatchQueue.main.async {
-            if let title = title {
-                self.movieListLabel.text = title
-                self.movieListImage.image = image
-                self.setupLayoutFilm()
+            if let url: URL = film?.imageURL, let title = film?.title {
+                if let data = try? Data(contentsOf: url) {
+                    self.movieListImage.image = UIImage(data: data)
+                    self.movieListLabel.text = title
+                    self.setupLayoutFilm()
+                }
+            }
             }
         }
     }
-    
-}
 
 // MARK: - Setup Layout
-extension MovieListCell {
+private extension MovieListCell {
     func setupLayoutFilm() {
         addSubview(movieListImage)
         addSubview(movieListLabel)

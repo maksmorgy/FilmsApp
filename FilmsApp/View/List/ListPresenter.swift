@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import CoreData
 
 protocol ListPresenterDelegate {
     func updateData()
@@ -8,59 +9,43 @@ protocol ListPresenterDelegate {
 protocol ListPresenterProtocol {
     var delegate: ListPresenterDelegate? {get set}
     
-    func loadData(data: FilmsCollection)
-    func titleAtindex(index: Int) -> String?
-    func imageAtindex(index: Int) -> UIImage?
-    func idAtindex(index: Int) -> String?
     func numberOffilms() -> Int
-    func saveFilms(title: String?, image: UIImage?)
+    func saveFilms(title: String?, url: URL?)
+    func filmAtIndex(index: Int) -> Film?
 }
 
 public class ListPresenter: ListPresenterProtocol {
+    
+    // MARK: - Properties
     var delegate: ListPresenterDelegate?
-    var films: [Film]?
+    private let films: [Film]?
+    private var managerCD = CoreDataManager()
     
-    // TODO: Pass CoreDataManager via initializer
-    let context = CoreDataManager.instance.persistentContainer.viewContext
-
-    
-    func loadData(data: FilmsCollection) {
+    // MARK: - Initialization
+    init(managerCD: CoreDataManager, data: FilmsCollection) {
+        self.managerCD = managerCD
         self.films = data.films
-        delegate?.updateData()
     }
     
-    // TODO: Replace methods below with "filmAtIndex" method
-    
-    func titleAtindex(index: Int) -> String? {
-        let title = films?[index].title
-        return title
+    // MARK: - Action
+    func filmAtIndex(index: Int) -> Film? {
+        let film = films?[index]
+        return film
     }
     
-    func imageAtindex(index: Int) -> UIImage? {
-        var image = UIImage()
-        if let url: URL? = films?[index].imageURL {
-            if let data = try? Data(contentsOf: url as! URL) {
-                image = UIImage(data: data)!
+    func saveFilms(title: String?, url: URL?) {
+        let moFilm = MOFilm(context: self.managerCD.persistentContainer.viewContext)
+        
+        if let url: URL = url {
+            if let data = try? Data(contentsOf: url) {
+                moFilm.filmImage = data
+                moFilm.filmTitle = title
+                managerCD.saveContext()
             }
         }
-        return image
-    }
-    
-    func idAtindex(index: Int) -> String? {
-        return self.films?[index].filmId
-    }
-    
-    func saveFilms(title: String?, image: UIImage?) {
-        let moFilm = MOFilm(context: self.context)
-        moFilm.filmTitle = title
-        // TODO: Remove forced unwrapping
-        let data = image?.pngData()
-        moFilm.filmImage = data
-        CoreDataManager.instance.saveContext()
     }
     
     func numberOffilms() -> Int {
         return films?.count ?? 0
     }
-    
 }
