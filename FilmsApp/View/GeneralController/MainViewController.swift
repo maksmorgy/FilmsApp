@@ -42,27 +42,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         createTableView()
         navigationItem.title = "Films"
-        
-//        let icon = UIImage(named: "magnifyingglass")
-//        let iconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 50, height: 50))
-//        let iconButton = UIButton(frame: iconSize)
-//        iconButton.setBackgroundImage(icon, for: .normal)
-//        let barButton = UIBarButtonItem(customView: iconButton)
-//        iconButton.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
-
-        
-        //let icon = UIImage(named: "magnifyingglass")
-//        let menuButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(searchTapped))
-//        menuButton.image = UIImage.init(systemName: "magnifyingglass")
-//        menuButton.imageInsets = UIEdgeInsets(top: 200, left: 20, bottom: 0, right: 0)
-//        self.navigationItem.rightBarButtonItem = menuButton
-        
-        
-        
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done,       target: self, action: #selector(searchTapped))
-        
-        //navigationController?.navigationBar.prefersLargeTitles = true
-        
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "magnifyingglass")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = .systemBlue
@@ -73,7 +52,6 @@ class MainViewController: UIViewController {
         button.tintColor = .black
         let menuBarItem = UIBarButtonItem(customView: button)
         navigationItem.rightBarButtonItem = menuBarItem
-        //navigationItem.rightBarButtonItem?.tintColor = .black
     }
     
     var newViewController = SearchViewController(presenter: SearchPresenter(dataTransferService: DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com"))), endpoints: DefaultMoviesEnpdoints()))
