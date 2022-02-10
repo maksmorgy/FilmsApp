@@ -1,68 +1,23 @@
 import Foundation
 import UIKit
 
-class SearchViewController: UIViewController {
-   
-    var searchTableView: UITableView = {
+class SearchViewController: UIViewController, UISearchBarDelegate {
+    
+    //MARK:- Properties
+    private var searchTableView: UITableView = {
         let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
-    
-    let filterButton: UIBarButtonItem = {
-        let button = UIBarButtonItem()
-        return button
-    }()
-    
-    
-    var imageView: UIImageView!
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
     
     var presenter: SearchPresenterProtocol?
     var timer = Timer()
     let searchController = UISearchController(searchResultsController: nil)
-    var isSearchBarEmpty: Bool {
-      return searchController.searchBar.text?.isEmpty ?? true
-    }
-    let popover = PopoverContentController()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationItem.title = "Films"
-        self.navigationItem.hidesSearchBarWhenScrolling = false
-        self.navigationItem.searchController = searchController
-        
-        searchController.searchResultsUpdater = self
-        //searchController.dimsBackgroundDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Film"
-        definesPresentationContext = false
-
-        createTableView()
-        searchTableView.delegate = self
-        searchTableView.dataSource = self
-        
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "line.horizontal.3.decrease.circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        button.tintColor = .black
-        button.isUserInteractionEnabled = true
-        let save = UIAction(title: "action", state: .on, handler: {_ in })
-        let comedy = UIAction(title: "comedy", state: .on, handler: {_ in })
-        let menu = UIMenu(title: "Menu", image: nil, identifier: nil, options: [], children: [save, comedy])
-        
-        let menuBarItem = UIBarButtonItem(
-            title: nil,
-            image: UIImage(systemName: "line.horizontal.3.decrease.circle"),
-            primaryAction: nil,
-            menu: menu
-        )
-        
-        navigationItem.rightBarButtonItem = menuBarItem
-        
-        
-    }
-    
+    //MARK:- Initialization
     init(presenter: SearchPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -72,30 +27,76 @@ class SearchViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func filterTapped() {
-
-        let vc = PopoverContentController()
-        vc.modalPresentationStyle = .popover
-        let popover = vc.popoverPresentationController
-        popover?.delegate = self
-        popover?.permittedArrowDirections = .any
-        popover?.barButtonItem = navigationItem.rightBarButtonItem
-        present(vc, animated: true, completion: nil)
-          
+    //MARK:- Life cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationItem.title = "Films"
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        //searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Film"
+        searchController.searchBar.delegate = self
+        searchController.searchBar.showsCancelButton = false
+        
+        searchTableView.delegate = self
+        searchTableView.dataSource = self
+        setupLayout()
+      
+        let menuBarItem = UIBarButtonItem(
+            title: nil,
+            image: UIImage(systemName: "line.horizontal.3.decrease.circle"),
+            primaryAction: nil,
+            menu: makeMenu()
+        )
+        navigationItem.rightBarButtonItem = menuBarItem
     }
     
-    private func createTableView() {
+    //MARK:- Action
+    func makeContextAction() -> UIAction {
+        let image = UIImage(systemName: "line.horizontal.3.decrease.circle")
+        
+        return UIAction(
+            title: "action",
+            image: image,
+            identifier: nil,
+            attributes: .destructive) { _ in }
+    }
+    
+    func makeMenu() -> UIMenu {
+        let titles = ["action", "comedy", "hystory", "family", "sport"]
+        
+        let actions = titles
+            .enumerated()
+            .map { index, title in
+                return UIAction(
+                    title: title,
+                    identifier: nil,
+                    handler: {_ in })
+            }
+        return UIMenu(
+            title: "Ganre",
+            image: UIImage(systemName: "star.circle"),
+            children: actions)
+    }
+}
+private extension SearchViewController {
+    func setupLayout() {
         searchTableView = UITableView(frame: view.bounds, style: .plain)
-        view.addSubview(searchTableView)
-        createListCell()
-    }
-    
-    func createListCell() {
+        self.view.addSubview(searchTableView)
+//        NSLayoutConstraint.activate([
+//            searchTableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+//            searchTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+//            searchTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+//            searchTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+//        ])
+       
         self.searchTableView.register(SearchCell.self, forCellReuseIdentifier: "cell")
     }
-    
 }
 
+//MARK:- UITableViewDelegate, UITableViewDataSource
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter?.searchFilms?.count ?? 0
@@ -104,95 +105,38 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if let customCell = cell as? SearchCell {
-        DispatchQueue.main.async {
-            customCell.searchLabel.text = self.presenter?.searchFilms?[indexPath.row].title
-            customCell.searchImage.image = self.presenter?.searchFilms?[indexPath.row].image
-        }
+            DispatchQueue.main.async {
+                customCell.searchLabel.text = self.presenter?.searchFilms?[indexPath.row].title
+                customCell.searchImage.image = self.presenter?.searchFilms?[indexPath.row].image
+            }
             return customCell
         }
         return cell
-        }
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
 }
 
+//MARK:- UISearchResultsUpdating
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(SearchViewController.reload), object: nil)
         self.perform(#selector(SearchViewController.reload), with: nil, afterDelay: 1)
         
-        }
+    }
     @objc func reload() {
         guard let text = searchController.searchBar.text else { return }
         presenter?.searchFilms(title: text)
+    }
 }
-        }
+
+//MARK:- SearchPresenterDelegate
 extension SearchViewController: SearchPresenterDelegate { 
     func updataData() {
         DispatchQueue.main.async {
-        self.searchTableView.reloadData()
+            self.searchTableView.reloadData()
         }
     }
 }
-
-extension SearchViewController: UIPopoverPresentationControllerDelegate {
-
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-
-    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
-
-    }
-
-    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
-        return true
-    }
-}
-
-class PopoverContentController: UIViewController {
-    let genre = ["action", "comedy", "famaly", "hystory", "adwanture", "war", "crime"]
-    
-    var tableView: UITableView = {
-        let table = UITableView()
-        return table
-    }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        createTableView()
-    }
-    
-    private func createTableView() {
-        tableView = UITableView(frame: view.bounds, style: .plain)
-        view.addSubview(tableView)
-        createListCell()
-    }
-    func createListCell() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-}
-
-extension PopoverContentController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return genre.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = genre[indexPath.row]
-        return cell
-    }
-    
-}
-
-class EmptyViewController : UIViewController {
-    override func viewDidLoad() {
-        view.backgroundColor = UIColor.red
-    }
-}
-

@@ -12,7 +12,6 @@ protocol SearchPresenterProtocol: AnyObject {
     
     func searchFilms(title: String)
     func saveFilms(data: [Film])
-
 }
 
 public class SearchPresenter: SearchPresenterProtocol {
@@ -51,6 +50,7 @@ public class SearchPresenter: SearchPresenterProtocol {
     
     func saveFilms(data: [Film]) {
         searchFilms?.removeAll()
+        searchFilms = []
         for i in 0...data.count - 1 {
             let title = data[i].title
             DispatchQueue.main.async {
