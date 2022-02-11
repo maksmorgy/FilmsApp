@@ -24,11 +24,11 @@ class FilmCell: UICollectionViewCell {
     //MARK: - Action
     func setFilm(film: Film?) {
         DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: (film?.imageURL)!) {
-               if let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self?.myImageView.image = image
-                }
+            if let data = try? Data(contentsOf: (film?.imageURL) as! URL) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.myImageView.image = image
+                    }
                 }
             }
         }

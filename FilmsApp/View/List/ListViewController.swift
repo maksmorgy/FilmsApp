@@ -11,7 +11,9 @@ class ListViewController: UIViewController {
     }()
     
     private let cellReuseIndentifier = "cell"
-    var presenter: ListPresenterProtocol
+    //private let presenter: ListPresenterProtocol
+    private let presenter: ListPresenterProtocol
+
     
     // MARK: - Initialization
     init(presenter: ListPresenterProtocol ) {
@@ -68,16 +70,14 @@ private extension ListViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.numberOffilms()
+        return presenter.numberOfFilms()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIndentifier, for: indexPath)
         
         if let customCell = cell as? FilmListCell {
-            DispatchQueue.main.async {
                 customCell.updateAppearanceFor(film: self.presenter.filmAtIndex(index: indexPath.row))
-            }
             return customCell
         }
         return cell
@@ -85,16 +85,16 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? FilmListCell else { return }
-        cell.updateAppearanceFor(film: self.presenter.filmAtIndex(index: indexPath.row))
+        cell.updateAppearanceFor(film: presenter.filmAtIndex(index: indexPath.row))
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        listTableView.deselectRow(at: indexPath, animated: true )
-        let filmId = self.presenter.filmAtIndex(index: indexPath.row)?.filmId
+        listTableView.deselectRow(at: indexPath, animated: true)
+        let filmId = presenter.filmAtIndex(index: indexPath.row)?.filmId
         let dataTransferService = DefaultDataTransferService(config: NetworkConfig(server:  Server(scheme: .https, host: "imdb-api.com")))
         let endpoints = DefaultFilmsEnpdoints()
         let newViewController = DetailController(presenter: DetailPresenter(dataTransferService: dataTransferService, endpoints: endpoints, id: filmId ?? ""))
-        self.navigationController?.pushViewController(newViewController, animated: true)
+        navigationController?.pushViewController(newViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -105,6 +105,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - ListPresenterDelegate
 extension ListViewController: ListPresenterDelegate {
     func updateData() {
-        self.listTableView.reloadData()
+        DispatchQueue.main.async {
+            self.listTableView.reloadData()
+        }
     }
 }

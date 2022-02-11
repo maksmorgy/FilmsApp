@@ -5,7 +5,7 @@ protocol DetailPresenterDelegate: AnyObject {
 }
 
 protocol DetailPresenterProtocol: AnyObject {
-    var filmDescription: FilmDetails? { get set }
+    var filmDetails: FilmDetails? { get set }
     var delegate: DetailPresenterDelegate? { get set }
     func fetchFilmDetails(id: String)
 }
@@ -13,7 +13,7 @@ protocol DetailPresenterProtocol: AnyObject {
 public class DetailPresenter: DetailPresenterProtocol {
     
     // MARK: - Properties
-    internal var filmDescription: FilmDetails?
+    var filmDetails: FilmDetails?
     private var filmId: String
     
     weak var delegate: DetailPresenterDelegate?
@@ -34,8 +34,8 @@ public class DetailPresenter: DetailPresenterProtocol {
             switch result {
             case .success(let filmResponse):
                 let film = FilmDetails(id: filmResponse.id ?? "", originalTitle: filmResponse.title ?? "", genres: filmResponse.genres ?? "", countries: filmResponse.countries ?? "", rating: filmResponse.imDbRating ?? "", image: filmResponse.image ?? "")
-                self?.filmDescription = film
-                self?.delegate?.updateData(data: self?.filmDescription)
+                self?.filmDetails = film
+                self?.delegate?.updateData(data: self?.filmDetails)
                 
             case .failure(let error):
                 print("Description error: \(error)")

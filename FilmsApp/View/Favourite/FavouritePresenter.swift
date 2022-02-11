@@ -2,43 +2,43 @@ import Foundation
 import CoreData
 
 protocol FavouritePresenterDelegate: AnyObject {
-    func updataData(data: [MOFilm])
+    func updataData(data: [FilmMO])
 }
 
 protocol FavouritePresenterProtocol: AnyObject {
     var delegate: FavouritePresenterDelegate? { get set }
     
     func loadFilms()
-    func deleteFilm(data: MOFilm, index: Int)
-    func filmAtindex(index: Int) -> MOFilm?
+    func deleteFilm(data: FilmMO, index: Int)
+    func filmAtindex(index: Int) -> FilmMO?
     func numbersOfFilms() -> Int
 }
 
 public class FavouritePresenter: FavouritePresenterProtocol {
     
     // MARK: - Properties
-    private var films: [MOFilm]?
+    private var films: [FilmMO]?
     weak var delegate: FavouritePresenterDelegate?
-    private var managerCD = CoreDataManager()
+    private var coreDataManager = CoreDataManager()
     
     // MARK: - Initialization
-    init(managerCD: CoreDataManager) {
-        self.managerCD = managerCD
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
     }
     
     // MARK: - Action
     func loadFilms() {
-        let request : NSFetchRequest<MOFilm> = MOFilm.fetchRequest()
+        let request : NSFetchRequest<FilmMO> = FilmMO.fetchRequest()
         
         do{
-            films = try managerCD.persistentContainer.viewContext.fetch(request)
+            films = try coreDataManager.persistentContainer.viewContext.fetch(request)
             delegate?.updataData(data: films!)
         } catch {
             print("Error loading categories \(error)")
         }
     }
     
-    func filmAtindex(index: Int) -> MOFilm? {
+    func filmAtindex(index: Int) -> FilmMO? {
         let film = films?[index]
         return film
     }
@@ -47,8 +47,8 @@ public class FavouritePresenter: FavouritePresenterProtocol {
         return films?.count ?? 0
     }
     
-    func deleteFilm(data: MOFilm, index: Int) {
-        self.films?.remove(at: index)
-        managerCD.delete(film: data)
+    func deleteFilm(data: FilmMO, index: Int) {
+        films?.remove(at: index)
+        coreDataManager.delete(film: data)
     }
 }

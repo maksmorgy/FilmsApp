@@ -2,14 +2,14 @@ import Foundation
 import UIKit
 import CoreData
 
-protocol ListPresenterDelegate {
+public protocol ListPresenterDelegate: AnyObject {
     func updateData()
 }
 
-protocol ListPresenterProtocol {
+protocol ListPresenterProtocol: AnyObject {
     var delegate: ListPresenterDelegate? {get set}
     
-    func numberOffilms() -> Int
+    func numberOfFilms() -> Int
     func saveFilms(title: String?, url: URL?)
     func filmAtIndex(index: Int) -> Film?
 }
@@ -17,35 +17,34 @@ protocol ListPresenterProtocol {
 public class ListPresenter: ListPresenterProtocol {
     
     // MARK: - Properties
-    var delegate: ListPresenterDelegate?
-    private let films: [Film]?
-    private var managerCD = CoreDataManager()
+    public weak var delegate: ListPresenterDelegate?
+    private let films: [Film]
+    private var coreDataManager = CoreDataManager()
     
     // MARK: - Initialization
-    init(managerCD: CoreDataManager, data: FilmsCollection) {
-        self.managerCD = managerCD
+    init(coreDataManager: CoreDataManager, data: FilmsCollection) {
+        self.coreDataManager = coreDataManager
         self.films = data.films
     }
     
     // MARK: - Action
     func filmAtIndex(index: Int) -> Film? {
-        let film = films?[index]
+        let film = films[index]
         return film
     }
     
     func saveFilms(title: String?, url: URL?) {
-        let moFilm = MOFilm(context: self.managerCD.persistentContainer.viewContext)
-        
+        let filmMO = FilmMO(context: self.coreDataManager.persistentContainer.viewContext)
         if let url: URL = url {
             if let data = try? Data(contentsOf: url) {
-                moFilm.filmImage = data
-                moFilm.filmTitle = title
-                managerCD.saveContext()
+                filmMO.filmImage = data
+                filmMO.filmTitle = title
+                coreDataManager.saveContext()
             }
         }
     }
     
-    func numberOffilms() -> Int {
-        return films?.count ?? 0
+    func numberOfFilms() -> Int {
+        return films.count 
     }
 }

@@ -92,7 +92,7 @@ extension FavouriteController: UITableViewDelegate {
 
 //MARK: - FavouritePresenterDelegate
 extension FavouriteController: FavouritePresenterDelegate {
-    func updataData(data: [MOFilm]) {
+    func updataData(data: [FilmMO]) {
         self.favouriteTableView.reloadData()
     }
 }

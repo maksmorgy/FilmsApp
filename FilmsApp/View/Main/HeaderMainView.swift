@@ -21,17 +21,22 @@ class HeaderMainView: UIView {
 //MARK: - Configure Views
 private extension HeaderMainView {
     func configureViews() {
-        backgroundColor = .white
-        let label = UILabel()
-        label.textColor = UIColor.black
-        label.text = labelText
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.medium)
+        let label: UILabel = {
+            let label = UILabel()
+            label.textColor = UIColor.black
+            label.text = labelText
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.numberOfLines = 0
+            label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.medium)
+            return label
+        }()
+        
         addSubview(label)
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: centerXAnchor),
             label.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+        
+        backgroundColor = .white
     }
 }

@@ -7,7 +7,7 @@ class FilmsCollectionCell: UITableViewCell {
     private var films: [Film]? = []
     private let cell = "CollectionCell"
     
-    lazy var filmsCollectionView: UICollectionView = {
+    lazy private var filmsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5

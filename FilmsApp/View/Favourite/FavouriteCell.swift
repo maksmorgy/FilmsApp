@@ -18,11 +18,10 @@ class FavouriteCell: UITableViewCell {
         return image
     }()
     
-    private let loadingIndicator = UIActivityIndicatorView(style: .large)
-    
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.setupLayoutFilm()
     }
     
     required init?(coder: NSCoder) {
@@ -30,19 +29,10 @@ class FavouriteCell: UITableViewCell {
     }
     
     // MARK: - Action
-    func updateAppearanceFor (content: MOFilm?) {
-        DispatchQueue.main.async {
-            if let image = UIImage(data: (content?.filmImage)!){
-                self.favouriteLabel.text = content?.filmTitle
-                self.favouriteImage.image = image
-                self.setupLayoutFilm()
-                self.loadingIndicator.stopAnimating()
-            } else {
-                self.setupLayoutIndicator()
-                self.loadingIndicator.startAnimating()
-                self.favouriteLabel.text = ""
-                self.favouriteImage.image = .none
-            }
+    func updateAppearanceFor (content: FilmMO?) {
+        self.favouriteLabel.text = content?.filmTitle
+        if let image = UIImage(data: (content?.filmImage)!){
+            self.favouriteImage.image = image
         }
     }
 }
@@ -55,14 +45,6 @@ extension FavouriteCell {
         
         favouriteImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
         favouriteLabel.anchor(top: topAnchor, left: favouriteImage.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 250, height: 0, enableInsets: false)
-    }
-    
-    func setupLayoutIndicator() {
-        addSubview(loadingIndicator)
-        NSLayoutConstraint.activate([
-            loadingIndicator.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
-        ])
     }
 }
 

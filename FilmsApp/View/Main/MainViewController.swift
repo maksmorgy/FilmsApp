@@ -12,7 +12,7 @@ class MainViewController: UIViewController {
     }()
     
     private let presenter: MainViewPresenterProtocol
-    let cellReuseIdentifier = "mainCell"
+    private let cellReuseIdentifier = "mainCell"
     
     // MARK: - Initialization
     init(presenter: MainViewPresenterProtocol) {
@@ -26,6 +26,7 @@ class MainViewController: UIViewController {
     }
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Films"
@@ -33,7 +34,9 @@ class MainViewController: UIViewController {
     }
     
 }
+
 //MARK: - Setup Layout
+
 private extension MainViewController {
     func setupViews() {
         createTableView()
@@ -70,10 +73,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         if let customCell = cell as? FilmsCollectionCell {
-            DispatchQueue.main.async {
                 let films = self.presenter.filmsCollection?[indexPath.section].films.compactMap{ $0 }
                 customCell.setFilms(films)
-            }
             return customCell
         }
         return cell
@@ -81,7 +82,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func headerTapped(_ sender: UITapGestureRecognizer?) {
         guard let section = sender?.view?.tag, let film = presenter.filmsCollection?[section] else { return }
-        let newViewController = ListViewController(presenter: ListPresenter(managerCD: CoreDataManager(), data: film))
+        let newViewController = ListViewController(presenter: ListPresenter(coreDataManager: CoreDataManager(), data: film))
         navigationController?.pushViewController(newViewController, animated: true)
     }
     

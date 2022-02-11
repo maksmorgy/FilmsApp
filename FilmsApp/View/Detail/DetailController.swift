@@ -15,24 +15,28 @@ class DetailController: UIViewController {
     private let titleTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .systemFont(ofSize: 30)
         return textView
     }()
     
     private let ratingTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .systemFont(ofSize: 20)
         return textView
     }()
     
     private let genreTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .systemFont(ofSize: 20)
         return textView
     }()
     
     private let countryTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .systemFont(ofSize: 20)
         return textView
     }()
     
@@ -41,7 +45,6 @@ class DetailController: UIViewController {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
         self.presenter.delegate = self
-        
     }
     
     required init?(coder: NSCoder) {
@@ -51,14 +54,14 @@ class DetailController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         view.backgroundColor = .white
-        addObjects()
+        setupViewHierarchy()
         setupLayout()
     }
 }
 
 // MARK: - Setup Layout
 private extension DetailController {
-    func addObjects() {
+    func setupViewHierarchy() {
         view.addSubview(imageView)
         view.addSubview(titleTextView)
         
@@ -104,20 +107,12 @@ private extension DetailController {
         ])
     }
     
-    func updateFontSize() {
-        titleTextView.font = .systemFont(ofSize: 30)
-        countryTextView.font = .systemFont(ofSize: 20)
-        genreTextView.font = .systemFont(ofSize: 20)
-        ratingTextView.font = .systemFont(ofSize: 20)
-    }
 }
 
 //MARK: - DetailPresenterDelegate
 extension DetailController: DetailPresenterDelegate {
     func updateData(data: FilmDetails?) {
         DispatchQueue.main.async {
-            self.updateFontSize()
-            
             self.titleTextView.text = "Title: \(data!.originalTitle)"
             self.countryTextView.text = "Country: \(data!.countries)"
             self.genreTextView.text = "Genre: \(data!.genres)"

@@ -7,7 +7,7 @@ class CoreDataManager {
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
 
-        let container = NSPersistentContainer(name: "MOFilm")
+        let container = NSPersistentContainer(name: "FilmsApp")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
 
@@ -33,7 +33,7 @@ class CoreDataManager {
         }
     }
     
-    func delete(film: MOFilm) {
+    func delete(film: FilmMO) {
         let context = persistentContainer.viewContext
         context.delete(film)
         saveContext()
